@@ -6,4 +6,9 @@ async function echo() {
   return response.data;
 }
 
-export { echo };
+async function getExpenses() {
+  const response = await axios.get(`${config.pathBase}/Expense/List`);
+  return response.data;
+}
+
+export { echo, getExpenses };
