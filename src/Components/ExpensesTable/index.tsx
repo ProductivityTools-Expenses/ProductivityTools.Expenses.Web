@@ -16,7 +16,7 @@ export function ExpensesTable() {
       Expensestable
       {expenses &&
         expenses.map((x: any) => {
-          return <div>{x.name}</div>;
+          return <div>{x.name} | {x.bag?.name}</div>;
         })}
     </div>
   );
