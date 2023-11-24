@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import * as api from "../../Services/apiService";
+import Expense from "../../Objects/Expense";
+import Bag from "../../Objects/Bag";
+import { debug } from "console";
 
 export function ExpensesTable() {
-  const [expenses, setExpenses] = useState<any>();
-  const [bags, setBags] = useState<any>();
+  const [expenses, setExpenses] = useState<Expense[]>();
+  const [bags, setBags] = useState<Bag[]>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,13 +27,13 @@ export function ExpensesTable() {
   return (
     <div>
       <select name="bags">
-        {bags?.map((x: any) => (
-          <option>{x.name}</option>
+        {bags?.map((x: Bag) => (
+          <option >{x.name}</option>
         ))}
       </select>
       Expensestable
       {expenses &&
-        expenses.map((x: any) => {
+        expenses.map((x: Expense) => {
           return (
             <div>
               {x.name} | {x.bag?.name}
