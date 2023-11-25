@@ -6,8 +6,9 @@ async function echo() {
   return response.data;
 }
 
-async function getExpenses() {
-  const response = await axios.get(`${config.pathBase}/Expense/List`);
+async function getExpenses(bagId: number | null) {
+  var data = { BagId: bagId };
+  const response = await axios.post(`${config.pathBase}/Expense/List`, data);
   return response.data;
 }
 
