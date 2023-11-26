@@ -36,14 +36,26 @@ export function ExpensesTable() {
       </select>
       <br />
       Expensestable
-      {expenses &&
-        expenses.map((x: Expense) => {
-          return (
-            <div>
-              {x.name} | {x.bag?.name}
-            </div>
-          );
-        })}
+      <table>
+        <thead>
+          <td>Category</td>
+        </thead>
+        <tbody>
+          {expenses &&
+            expenses.map((x: Expense) => {
+              return (
+                <tr>
+                  <td>{x.bag?.name}</td>
+                  <td>{x.name}</td>
+                  <td>{x.value}</td>
+                </tr>
+              );
+            })}
+          <tr>
+            <td>f</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }

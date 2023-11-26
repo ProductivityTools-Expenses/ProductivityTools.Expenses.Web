@@ -4,4 +4,5 @@ export default interface Expense {
   expenseId: number;
   name: string | null;
   bag: Bag | null;
+  value: number | null;
 }
