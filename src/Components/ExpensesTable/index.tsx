@@ -38,7 +38,13 @@ export function ExpensesTable() {
       Expensestable
       <table>
         <thead>
+          <td>Bag</td>
           <td>Category</td>
+          <td>Name</td>
+          <td>Value</td>
+          <td>Date</td>
+          {/* <td>Comment</td> */}
+          <td>discount</td>
         </thead>
         <tbody>
           {expenses &&
@@ -46,8 +52,12 @@ export function ExpensesTable() {
               return (
                 <tr>
                   <td>{x.bag?.name}</td>
+                  <td>{x.category?.name}</td>
                   <td>{x.name}</td>
                   <td>{x.value}</td>
+                  <td>{x.date?.toString()}</td>
+                  {/* <td>{x.comment}</td> */}
+                  <td>{x.discount}</td>
                 </tr>
               );
             })}
