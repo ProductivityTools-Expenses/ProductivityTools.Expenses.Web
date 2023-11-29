@@ -1,13 +1,20 @@
 import React from "react";
 import "./App.css";
+import {Home} from "./Components/Home"
 import { ExpensesTable } from "./Components/ExpensesTable";
-import {Echo} from "./Components/Echo"
+
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <Echo></Echo>
-      <ExpensesTable></ExpensesTable>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Expenses" element={<ExpensesTable />} />
+
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
