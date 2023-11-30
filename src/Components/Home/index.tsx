@@ -6,6 +6,7 @@ export function Home() {
     <div>
       home
       <a href="\Expenses">Expenses</a>
+      <a href="\ExpenseEdit">Edit</a>
       <Echo></Echo>
     </div>
   );
