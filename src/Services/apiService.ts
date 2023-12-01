@@ -17,4 +17,9 @@ async function getBags() {
   return response.data;
 }
 
-export { echo, getExpenses, getBags };
+async function getCategories() {
+  const response = await axios.get(`${config.pathBase}/Expense/CagetoryList`);
+  return response.data;
+}
+
+export { echo, getExpenses, getBags, getCategories };
