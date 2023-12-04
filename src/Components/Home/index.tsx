@@ -7,6 +7,7 @@ export function Home() {
       home
       <a href="\Expenses">Expenses</a>
       <a href="\ExpenseEdit">Edit</a>
+      <a href="\Login">Login</a>
       <Echo></Echo>
     </div>
   );

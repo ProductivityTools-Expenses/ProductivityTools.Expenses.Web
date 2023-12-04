@@ -5,14 +5,14 @@ export type Config = {
 };
 
 const dev = {
-  //clientId:"devmeetingsweb",
+  clientId:"ptexpensesprod",
   pathBase: "http://localhost:5232",
   //stsAuthority : 'https://identityserver.productivitytools.top:8010/',
   //clientRoot : 'http://localhost:3000/',
 };
 
 const prod = {
-  //clientId:"prodmeetingsweb",
+  clientId:"ptexpensesprod",
   pathBase: "https://apitransfers.productivitytools.top:8090",
   //stsAuthority : 'https://identityserver.productivitytools.top:8010/',
   //clientRoot : 'https://meetingsweb.z13.web.core.windows.net/',
