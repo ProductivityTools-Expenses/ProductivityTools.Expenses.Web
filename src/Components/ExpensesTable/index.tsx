@@ -31,26 +31,30 @@ export function ExpensesTable() {
       <br />
       <select name="bags" onChange={(e) => setSelectedBag(Number(e.target.value))}>
         {bags?.map((x: Bag) => (
-          <option value={x.bagId}>{x.name}</option>
+          <option key={x.bagId} value={x.bagId}>
+            {x.name}
+          </option>
         ))}
       </select>
       <br />
       Expensestable
       <table>
         <thead>
-          <td>Bag</td>
-          <td>Category</td>
-          <td>Name</td>
-          <td>Value</td>
-          <td>Date</td>
-          {/* <td>Comment</td> */}
-          <td>discount</td>
+          <tr>
+            <th>Bag</th>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Date</th>
+            {/* <td>Comment</td> */}
+            <td>discount</td>
+          </tr>
         </thead>
         <tbody>
           {expenses &&
             expenses.map((x: Expense) => {
               return (
-                <tr>
+                <tr key={x.expenseId}>
                   <td>{x.bag?.name}</td>
                   <td>{x.category?.name}</td>
                   <td>{x.name}</td>
