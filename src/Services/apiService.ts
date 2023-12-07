@@ -10,9 +10,12 @@ async function echo() {
 async function getExpenses(bagId: number | null) {
   console.log("apiservice,auth", auth);
   console.log("apiservice,current user", auth.currentUser);
-  let idToken = await auth.currentUser?.getIdToken();
+//  let idToken = await auth.currentUser?.getIdToken();
+  let idToken=localStorage.getItem("token");
+  console.log("idToken:",idToken);
+
   console.log("apiservice, idToken:", idToken);
-  if (auth && auth.currentUser && idToken) {
+  if (idToken) {
     const header = {
       headers: { Authorization: `Bearer ${idToken}` },
     };

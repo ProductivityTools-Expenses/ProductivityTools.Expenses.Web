@@ -18,7 +18,7 @@ export function AuthProvider({children}){
         console.log("AuthContext,useEffect,onIdTokenChanged")
         if (user==null)
         {
-            console.log("AuthContext,user,null")
+            console.log("AuthContext,mainFunction,user,null")
             // navigate("/Login");
         }
         //Adds an observer for changes to the signed-in user's ID token, which includes sign-in, sign-out, and token refresh events.
