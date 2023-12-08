@@ -15,7 +15,7 @@ const prod = {
   //clientId:"ptexpensesprod",
   pathBase: "https://apitransfers.productivitytools.top:8090",
   //stsAuthority : 'https://identityserver.productivitytools.top:8010/',
-  //clientRoot : 'https://meetingsweb.z13.web.core.windows.net/',
+  //clientRoot : 'https://meetingsweb.z13.web.core.windows.net/', ddddd
 };
 
 export const config: Config = process.env.NODE_ENV === "development" ? dev : prod;
