@@ -13,7 +13,7 @@ const dev = {
 
 const prod = {
   //clientId:"ptexpensesprod",
-  pathBase: "https://apitransfers.productivitytools.top:8090",
+  pathBase: "https://apiexpenses.productivitytools.top:8012",
   //stsAuthority : 'https://identityserver.productivitytools.top:8010/',
   //clientRoot : 'https://meetingsweb.z13.web.core.windows.net/', ddddd
 };
