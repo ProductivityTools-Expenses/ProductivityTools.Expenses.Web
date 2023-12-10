@@ -1,6 +1,7 @@
 import axios from "axios";
 import { config } from "../Config";
 import { auth } from "../Session/firebase";
+import Expense from "../Objects/Expense";
 
 async function echo() {
   const response = await axios.get(`${config.pathBase}/Expense/echo?name=pawel`);
@@ -10,9 +11,9 @@ async function echo() {
 async function getExpenses(bagId: number | null) {
   console.log("apiservice,auth", auth);
   console.log("apiservice,current user", auth.currentUser);
-//  let idToken = await auth.currentUser?.getIdToken();
-  let idToken=localStorage.getItem("token");
-  console.log("idToken:",idToken);
+  //  let idToken = await auth.currentUser?.getIdToken();
+  let idToken = localStorage.getItem("token");
+  console.log("idToken:", idToken);
 
   console.log("apiservice, idToken:", idToken);
   if (idToken) {
@@ -36,4 +37,9 @@ async function getCategories() {
   return response.data;
 }
 
-export { echo, getExpenses, getBags, getCategories };
+async function saveExpense(expense: Expense) {
+  const response = await axios.post(`${config.pathBase}/Expense/Save`, expense);
+  return response.data;
+}
+
+export { echo, getExpenses, getBags, getCategories, saveExpense };

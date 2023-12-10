@@ -61,7 +61,7 @@ export function ExpensesTable() {
                   <td>{x.value}</td>
                   <td>{x.date?.toString()}</td>
                   {/* <td>{x.comment}</td> */}
-                  <td>{x.discount}</td>
+                  {/* <td>{x.discount}</td> */}
                 </tr>
               );
             })}
