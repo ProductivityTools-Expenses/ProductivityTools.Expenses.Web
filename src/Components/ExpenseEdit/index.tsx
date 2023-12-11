@@ -40,18 +40,26 @@ export function ExpenseEdit() {
     var r = await api.saveExpense(expense);
   };
 
+  const updateStringValue=(e :any)=>{
+    setExpense({...expense,[e.target.name]:e.target.value} as Expense)
+  } 
+
+  const updateNumberValue=(e :any)=>{
+    setExpense({...expense,[e.target.name]:Number(e.target.value)} as Expense)
+  } 
+
   return (
     <div>
       <p>
-        debug:{expense?.name} bagid: {expense?.bagId}
+        debug:{expense?.name} bagid: {expense?.bagId}, categoryId:{expense?.categoryId}, date:{String(expense?.date)}
       </p>
       <p>
         Name
-        <input type="text" onChange={(x: any) => setExpense({ ...expense, name: x.target.value } as Expense)}></input>
+        <input type="text" name="name" onChange={updateStringValue}></input>
       </p>
       <p>
         Bag
-        <select onChange={(x: any) => setExpense({ ...expense, bagId: Number(x.target.value) } as Expense)}>
+        <select name="bagId" onChange={updateNumberValue}>
           {bags?.map((oneBag) => {
             return (
               <option key={oneBag.bagId} value={oneBag.bagId}>
@@ -63,7 +71,7 @@ export function ExpenseEdit() {
       </p>
       <p>
         Category
-        <select onChange={(x: any) => setExpense({ ...expense, categoryId: Number(x.target.value) } as Expense)}>
+        <select name="categoryId" onChange={updateNumberValue}>
           {categories?.map((category) => {
             return (
               <option key={category.categoryId} value={category.categoryId}>
@@ -74,7 +82,7 @@ export function ExpenseEdit() {
         </select>
       </p>
       <p>
-        Date<input type="text"></input>
+        Date<input name="date" type="text" onChange={updateStringValue}></input>
       </p>
       <p>
         Currency<select></select>
