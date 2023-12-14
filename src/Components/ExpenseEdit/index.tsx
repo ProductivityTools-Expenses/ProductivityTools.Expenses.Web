@@ -15,10 +15,13 @@ export function ExpenseEdit() {
     bag: null,
     categoryId: null,
     category: null,
-    value: 0,
-    free: false,
-    comment: "",
-    discount: 0,
+    amount: 0,
+    price: null,
+    value: null,
+    deductions: null,
+    additions: null,
+    cost: null,
+    comment: null,
   });
 
   useEffect(() => {

@@ -44,10 +44,14 @@ export function ExpensesTable() {
             <th>Bag</th>
             <th>Category</th>
             <th>Name</th>
-            <th>Value</th>
             <th>Date</th>
-            {/* <td>Comment</td> */}
-            <td>discount</td>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Value</th>
+            <th>Additions</th>
+            <th>Deductions</th>
+            <th>Cost</th>
+            {/* <th>Comment</th>             */}
           </tr>
         </thead>
         <tbody>
@@ -58,8 +62,15 @@ export function ExpensesTable() {
                   <td>{x.bag?.name}</td>
                   <td>{x.category?.name}</td>
                   <td>{x.name}</td>
-                  <td>{x.value}</td>
                   <td>{x.date?.toString()}</td>
+                  <td>{x.price}</td>
+                  <td>{x.amount}</td>
+                  <td>{x.value}</td>
+                  <td>{x.additions}</td>
+                  <td>{x.deductions}</td>
+                  <td>{x.cost}</td>
+                  {/* <td>{x.comment}</td> */}
+                  
                   {/* <td>{x.comment}</td> */}
                   {/* <td>{x.discount}</td> */}
                 </tr>
