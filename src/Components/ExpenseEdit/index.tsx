@@ -24,12 +24,18 @@ export function ExpenseEdit() {
   useEffect(() => {
     const getBags = async () => {
       const data = await api.getBags();
+      if (expense.expenseId == null) {
+        setExpense({ ...expense, bagId: data[0].bagId } as Expense);
+      }
       setBags(data);
     };
 
     const getCategories = async () => {
       const data = await api.getCategories();
       setCategories(data);
+      if (expense.expenseId == null) {
+        setExpense({ ...expense, categoryId: data[0].categoryId } as Expense);
+      }
     };
 
     getBags();
@@ -40,13 +46,13 @@ export function ExpenseEdit() {
     var r = await api.saveExpense(expense);
   };
 
-  const updateStringValue=(e :any)=>{
-    setExpense({...expense,[e.target.name]:e.target.value} as Expense)
-  } 
+  const updateStringValue = (e: any) => {
+    setExpense({ ...expense, [e.target.name]: e.target.value } as Expense);
+  };
 
-  const updateNumberValue=(e :any)=>{
-    setExpense({...expense,[e.target.name]:Number(e.target.value)} as Expense)
-  } 
+  const updateNumberValue = (e: any) => {
+    setExpense({ ...expense, [e.target.name]: Number(e.target.value) } as Expense);
+  };
 
   return (
     <div>
@@ -83,9 +89,6 @@ export function ExpenseEdit() {
       </p>
       <p>
         Date<input name="date" type="text" onChange={updateStringValue}></input>
-      </p>
-      <p>
-        Currency<select></select>
       </p>
       <p>
         Value<input type="text"></input>
