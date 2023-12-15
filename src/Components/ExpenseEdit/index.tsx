@@ -73,7 +73,7 @@ export function ExpenseEdit() {
       <p>
         debug:{expense?.name} bagid: {expense?.bagId}, categoryId:{expense?.categoryId}, date:{String(expense?.date)},
         amount: {expense?.amount}, price: {expense?.price}, deductions:{expense?.deductions}, additions:{" "}
-        {expense?.additions}
+        {expense?.additions}, comment:{expense?.comment}
       </p>
       <p>
         Name
@@ -125,7 +125,7 @@ export function ExpenseEdit() {
         Cost<input type="text" disabled={true}></input>
       </p>
       <p>
-        Comment<input type="text"></input>
+        Comment<input name="comment"  type="text"  onChange={updateStringValue}></input>
       </p>
       <button onClick={add}>add</button>
     </div>

@@ -12,7 +12,8 @@ async function getExpenses(bagId: number | null) {
   console.log("apiservice,auth", auth);
   console.log("apiservice,current user", auth.currentUser);
   //  let idToken = await auth.currentUser?.getIdToken();
-  let idToken = localStorage.getItem("token");
+  let idToken = await auth.currentUser?.getIdToken();
+  //let idToken = localStorage.getItem("token");
   console.log("idToken:", idToken);
 
   console.log("apiservice, idToken:", idToken);
