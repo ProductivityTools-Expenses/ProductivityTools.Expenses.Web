@@ -10,7 +10,7 @@ export function ExpenseEdit() {
   const [expense, setExpense] = useState<Expense>({
     expenseId: null,
     name: "",
-    date: null,
+    date: formatISODate(new Date()),
     bagId: null,
     bag: null,
     categoryId: null,
@@ -23,6 +23,17 @@ export function ExpenseEdit() {
     cost: null,
     comment: null,
   });
+
+  function formatISODate(date: Date | null): string {
+    if (date == null) {
+      return "";
+    } else {
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+  }
 
   useEffect(() => {
     const getBags = async () => {
@@ -60,7 +71,9 @@ export function ExpenseEdit() {
   return (
     <div>
       <p>
-        debug:{expense?.name} bagid: {expense?.bagId}, categoryId:{expense?.categoryId}, date:{String(expense?.date)}
+        debug:{expense?.name} bagid: {expense?.bagId}, categoryId:{expense?.categoryId}, date:{String(expense?.date)},
+        amount: {expense?.amount}, price: {expense?.price}, deductions:{expense?.deductions}, additions:{" "}
+        {expense?.additions}
       </p>
       <p>
         Name
@@ -91,16 +104,25 @@ export function ExpenseEdit() {
         </select>
       </p>
       <p>
-        Date<input name="date" type="text" onChange={updateStringValue}></input>
+        Date<input name="date" type="text" value={expense?.date || ""} onChange={updateStringValue}></input>
       </p>
       <p>
-        Value<input type="text"></input>
+        Amount<input name="amount" type="text" onChange={updateNumberValue}></input>
       </p>
       <p>
-        Discount<input type="text"></input>
+        Price<input name="price" type="text" onChange={updateNumberValue}></input>
       </p>
       <p>
-        Free<input type="text"></input>
+        Value<input type="text" disabled={true}></input>
+      </p>
+      <p>
+        Deductions<input name="deductions" type="text" onChange={updateNumberValue}></input>
+      </p>
+      <p>
+        Additions<input name="additions" type="text" onChange={updateNumberValue}></input>
+      </p>
+      <p>
+        Cost<input type="text" disabled={true}></input>
       </p>
       <p>
         Comment<input type="text"></input>

@@ -4,7 +4,7 @@ import Category from "./Category";
 export default interface Expense {
   expenseId: number | null;
   name: string | null;
-  date: Date | null;
+  date: string | null;
   amount: number | null;
   price: number | null;
   value: number | null;
