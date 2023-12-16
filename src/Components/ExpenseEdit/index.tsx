@@ -71,7 +71,7 @@ export function ExpenseEdit() {
   return (
     <div>
       <p>
-        debug:{expense?.name} bagid: {expense?.bagId}, categoryId:{expense?.categoryId}, date:{String(expense?.date)},
+        Name:{expense?.name} bagid: {expense?.bagId}, categoryId:{expense?.categoryId}, date:{String(expense?.date)},
         amount: {expense?.amount}, price: {expense?.price}, deductions:{expense?.deductions}, additions:{" "}
         {expense?.additions}, comment:{expense?.comment}
       </p>

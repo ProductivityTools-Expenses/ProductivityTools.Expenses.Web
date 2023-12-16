@@ -51,7 +51,6 @@ async function saveCategory(category: Category) {
 }
 
 async function saveExpense(expense: Expense) {
-  debugger;
   const response = await axios.post(`${config.pathBase}/Expense/Save`, expense);
   return response.data;
 }
