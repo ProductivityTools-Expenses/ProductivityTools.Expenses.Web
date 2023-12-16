@@ -2,20 +2,23 @@ import { useEffect, useState } from "react";
 import * as api from "../../Services/apiService";
 import Expense from "../../Objects/Expense";
 import Bag from "../../Objects/Bag";
+import Category from "../../Objects/Category";
 import { debug } from "console";
 
 export function ExpensesTable() {
   const [expenses, setExpenses] = useState<Expense[]>();
   const [bags, setBags] = useState<Bag[]>();
+  const [categories, setCategories] = useState<Category[]>();
   const [selectedBag, setSelectedBag] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await api.getExpenses(selectedBag);
+      const data = await api.getExpenses(selectedBag, selectedCategory);
       setExpenses(data);
     };
     fetchData();
-  }, [selectedBag]);
+  }, [selectedBag, selectedCategory]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,13 +28,31 @@ export function ExpensesTable() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await api.getCategories();
+      setCategories(data);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div>
-      <span> selectedBag: {selectedBag}</span>
+      <span>
+        {" "}
+        selectedBag: {selectedBag} selectedCategory:{selectedCategory}
+      </span>
       <br />
       <select name="bags" onChange={(e) => setSelectedBag(Number(e.target.value))}>
         {bags?.map((x: Bag) => (
           <option key={x.bagId} value={x.bagId}>
+            {x.name}
+          </option>
+        ))}
+      </select>
+      <select name="categories" onChange={(e) => setSelectedCategory(Number(e.target.value))}>
+        {categories?.map((x: Category) => (
+          <option key={x.categoryId} value={x.categoryId || -1}>
             {x.name}
           </option>
         ))}
@@ -70,7 +91,7 @@ export function ExpensesTable() {
                   <td>{x.deductions}</td>
                   <td>{x.cost}</td>
                   {/* <td>{x.comment}</td> */}
-                  
+
                   {/* <td>{x.comment}</td> */}
                   {/* <td>{x.discount}</td> */}
                 </tr>

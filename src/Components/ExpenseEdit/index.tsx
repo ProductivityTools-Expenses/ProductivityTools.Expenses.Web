@@ -96,7 +96,7 @@ export function ExpenseEdit() {
         <select name="categoryId" onChange={updateNumberValue}>
           {categories?.map((category) => {
             return (
-              <option key={category.categoryId} value={category.categoryId}>
+              <option key={category.categoryId} value={category.categoryId || -1}>
                 {category.name}
               </option>
             );
@@ -125,7 +125,7 @@ export function ExpenseEdit() {
         Cost<input type="text" disabled={true}></input>
       </p>
       <p>
-        Comment<input name="comment"  type="text"  onChange={updateStringValue}></input>
+        Comment<input name="comment" type="text" onChange={updateStringValue}></input>
       </p>
       <button onClick={add}>add</button>
     </div>

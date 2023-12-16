@@ -7,6 +7,7 @@ import { ExpenseEdit } from "./Components/ExpenseEdit";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { AuthProvider } from "./Session/AuthContext";
 import Login from "./Session/Login";
+import { CategoryEdit } from "./Components/CategoryEdit";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/Login" element={<Login />} />
             <Route path="/Expenses" element={<ExpensesTable />} />
             <Route path="/ExpenseEdit" element={<ExpenseEdit />} />
+            <Route path="/CategoryEdit" element={<CategoryEdit />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

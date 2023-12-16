@@ -2,13 +2,14 @@ import axios from "axios";
 import { config } from "../Config";
 import { auth } from "../Session/firebase";
 import Expense from "../Objects/Expense";
+import Category from "../Objects/Category";
 
 async function echo() {
   const response = await axios.get(`${config.pathBase}/Expense/echo?name=pawel`);
   return response.data;
 }
 
-async function getExpenses(bagId: number | null) {
+async function getExpenses(bagId: number | null, categoryId: number | null) {
   console.log("apiservice,auth", auth);
   console.log("apiservice,current user", auth.currentUser);
   //  let idToken = await auth.currentUser?.getIdToken();
@@ -26,7 +27,7 @@ async function getExpenses(bagId: number | null) {
       headers: { Authorization: `Bearer ${idToken}` },
     };
 
-    var data = { BagId: bagId };
+    var data = { BagId: bagId, CategoryId: categoryId };
     const response = await axios.post(`${config.pathBase}/Expense/List`, data, header);
     return response.data;
   } else {
@@ -40,13 +41,19 @@ async function getBags() {
 }
 
 async function getCategories() {
-  const response = await axios.get(`${config.pathBase}/Expense/CagetoryList`);
+  const response = await axios.get(`${config.pathBase}/Category/CagetoryList`);
+  return response.data;
+}
+
+async function saveCategory(category: Category) {
+  const response = await axios.post(`${config.pathBase}/Category/CategorySave`, category);
   return response.data;
 }
 
 async function saveExpense(expense: Expense) {
+  debugger;
   const response = await axios.post(`${config.pathBase}/Expense/Save`, expense);
   return response.data;
 }
 
-export { echo, getExpenses, getBags, getCategories, saveExpense };
+export { echo, getExpenses, getBags, getCategories, saveCategory, saveExpense };
