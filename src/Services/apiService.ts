@@ -13,7 +13,11 @@ async function getExpenses(bagId: number | null) {
   console.log("apiservice,current user", auth.currentUser);
   //  let idToken = await auth.currentUser?.getIdToken();
   let idToken = await auth.currentUser?.getIdToken();
-  //let idToken = localStorage.getItem("token");
+  if (idToken == null) {
+    console.log("id token from auth empty, trying to get from localstorage");
+    idToken = String(localStorage.getItem("token"));
+  }
+  //let
   console.log("idToken:", idToken);
 
   console.log("apiservice, idToken:", idToken);
@@ -25,6 +29,8 @@ async function getExpenses(bagId: number | null) {
     var data = { BagId: bagId };
     const response = await axios.post(`${config.pathBase}/Expense/List`, data, header);
     return response.data;
+  } else {
+    console.log("idtoken empty");
   }
 }
 
