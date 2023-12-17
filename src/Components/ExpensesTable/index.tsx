@@ -4,6 +4,8 @@ import Expense from "../../Objects/Expense";
 import Bag from "../../Objects/Bag";
 import Category from "../../Objects/Category";
 import { debug } from "console";
+import { Link } from "react-router-dom";
+
 
 export function ExpensesTable() {
   const [expenses, setExpenses] = useState<Expense[]>();
@@ -38,6 +40,7 @@ export function ExpensesTable() {
 
   return (
     <div>
+      <Link to="/">Home</Link>
       <span>
         {" "}
         selectedBag: {selectedBag} selectedCategory:{selectedCategory}
