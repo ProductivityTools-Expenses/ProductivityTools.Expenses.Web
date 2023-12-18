@@ -4,7 +4,6 @@ import { logout } from "../../Session/firebase";
 
 export function Home() {
 
-
   return (
     <div>
       home

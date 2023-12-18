@@ -3,8 +3,11 @@ import * as api from "../../Services/apiService";
 import Bag from "../../Objects/Bag";
 import Category from "../../Objects/Category";
 import Expense from "../../Objects/Expense";
+import { useNavigate } from "react-router-dom";
+
 
 export function ExpenseEdit() {
+  let navigate = useNavigate();
   const [bags, setBags] = useState<Bag[]>();
   const [categories, setCategories] = useState<Category[]>();
   const [expense, setExpense] = useState<Expense>({
@@ -58,6 +61,7 @@ export function ExpenseEdit() {
 
   const add = async () => {
     var r = await api.saveExpense(expense);
+    navigate("/Expenses?bagId="+expense.bagId+"&categoryId="+expense.categoryId)
   };
 
   const updateStringValue = (e: any) => {

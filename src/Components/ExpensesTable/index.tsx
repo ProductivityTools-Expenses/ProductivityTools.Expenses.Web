@@ -5,9 +5,12 @@ import Bag from "../../Objects/Bag";
 import Category from "../../Objects/Category";
 import { debug } from "console";
 import { Link } from "react-router-dom";
-
+import { Navigate } from "react-router-dom";
+import useQuery from "../../Tools/NavigationExtensions";
 
 export function ExpensesTable() {
+  let query = useQuery();
+
   const [expenses, setExpenses] = useState<Expense[]>();
   const [bags, setBags] = useState<Bag[]>();
   const [categories, setCategories] = useState<Category[]>();
@@ -40,6 +43,7 @@ export function ExpensesTable() {
 
   return (
     <div>
+      <div>query:{query.get("bagId")}</div>
       <Link to="/">Home</Link>
       <span>
         {" "}
