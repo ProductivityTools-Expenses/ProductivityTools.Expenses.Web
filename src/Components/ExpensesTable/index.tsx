@@ -19,6 +19,12 @@ export function ExpensesTable() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (query.get("bagId") != "") {
+        setSelectedBag(Number(query.get("bagId")));
+      }
+      if (query.get("categoryId") != "") {
+        setSelectedCategory(Number(query.get("categoryId")));
+      }
       const data = await api.getExpenses(selectedBag, selectedCategory);
       setExpenses(data);
     };
@@ -50,14 +56,14 @@ export function ExpensesTable() {
         selectedBag: {selectedBag} selectedCategory:{selectedCategory}
       </span>
       <br />
-      <select name="bags" onChange={(e) => setSelectedBag(Number(e.target.value))}>
+      <select name="bags" value={selectedBag?.toString()} onChange={(e) => setSelectedBag(Number(e.target.value))}>
         {bags?.map((x: Bag) => (
           <option key={x.bagId} value={x.bagId}>
             {x.name}
           </option>
         ))}
       </select>
-      <select name="categories" onChange={(e) => setSelectedCategory(Number(e.target.value))}>
+      <select name="categories" value={selectedCategory?.toString()} onChange={(e) => setSelectedCategory(Number(e.target.value))}>
         {categories?.map((x: Category) => (
           <option key={x.categoryId} value={x.categoryId || -1}>
             {x.name}
