@@ -18,11 +18,12 @@ export function ExpensesTable() {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
   useEffect(() => {
+    debugger;
     const fetchData = async () => {
-      if (query.get("bagId") != "") {
+      if (query.get("bagId") != null) {
         setSelectedBag(Number(query.get("bagId")));
       }
-      if (query.get("categoryId") != "") {
+      if (query.get("categoryId") != null) {
         setSelectedCategory(Number(query.get("categoryId")));
       }
       const data = await api.getExpenses(selectedBag, selectedCategory);
