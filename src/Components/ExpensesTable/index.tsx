@@ -64,7 +64,11 @@ export function ExpensesTable() {
           </option>
         ))}
       </select>
-      <select name="categories" value={selectedCategory?.toString()} onChange={(e) => setSelectedCategory(Number(e.target.value))}>
+      <select
+        name="categories"
+        value={selectedCategory?.toString()}
+        onChange={(e) => setSelectedCategory(Number(e.target.value))}
+      >
         {categories?.map((x: Category) => (
           <option key={x.categoryId} value={x.categoryId || -1}>
             {x.name}
@@ -112,7 +116,23 @@ export function ExpensesTable() {
               );
             })}
           <tr>
-            <td>f</td>
+            <td>name</td>
+            <td>category</td>
+            <td>name</td>
+            <td>date</td>
+            <td>price</td>
+            <td>amount</td>
+            <td>value</td>
+            <td>additions</td>
+            <td>deductions</td>
+            <td>
+              {" "}
+              {expenses
+                ?.reduce((accumualtor: number, object: Expense) => {
+                  return accumualtor + object!.cost!
+                }, 0)
+                .toFixed(2)}
+            </td>
           </tr>
         </tbody>
       </table>
