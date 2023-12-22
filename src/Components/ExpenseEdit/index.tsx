@@ -5,7 +5,6 @@ import Category from "../../Objects/Category";
 import Expense from "../../Objects/Expense";
 import { useNavigate } from "react-router-dom";
 
-
 export function ExpenseEdit() {
   let navigate = useNavigate();
   const [bags, setBags] = useState<Bag[]>();
@@ -39,6 +38,19 @@ export function ExpenseEdit() {
   }
 
   useEffect(() => {
+    const getCategories = async () => {
+      if (expense.bagId != null) {
+        const data = await api.getCategories(expense.bagId);
+        setCategories(data);
+        if (expense.expenseId == null) {
+          setExpense({ ...expense, categoryId: data[0].categoryId } as Expense);
+        }
+      }
+    };
+    getCategories();
+  }, [expense.bagId]);
+
+  useEffect(() => {
     const getBags = async () => {
       const data = await api.getBags();
       if (expense.expenseId == null) {
@@ -47,21 +59,12 @@ export function ExpenseEdit() {
       setBags(data);
     };
 
-    const getCategories = async () => {
-      const data = await api.getCategories();
-      setCategories(data);
-      if (expense.expenseId == null) {
-        setExpense({ ...expense, categoryId: data[0].categoryId } as Expense);
-      }
-    };
-
     getBags();
-    getCategories();
   }, []);
 
   const add = async () => {
     var r = await api.saveExpense(expense);
-    navigate("/Expenses?bagId="+expense.bagId+"&categoryId="+expense.categoryId)
+    navigate("/Expenses?bagId=" + expense.bagId + "&categoryId=" + expense.categoryId);
   };
 
   const updateStringValue = (e: any) => {

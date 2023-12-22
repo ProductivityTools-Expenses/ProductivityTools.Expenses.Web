@@ -40,8 +40,9 @@ async function getBags() {
   return response.data;
 }
 
-async function getCategories() {
-  const response = await axios.get(`${config.pathBase}/Category/CagetoryList`);
+async function getCategories(selectedBag: number) {
+  var data = { bagId: selectedBag };
+  const response = await axios.post(`${config.pathBase}/Category/CagetoryList`,data);
   return response.data;
 }
 

@@ -42,11 +42,13 @@ export function ExpensesTable() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await api.getCategories();
-      setCategories(data);
+      if (selectedBag != null) {
+        const data = await api.getCategories(selectedBag);
+        setCategories(data);
+      }
     };
     fetchData();
-  }, []);
+  }, [selectedBag]);
 
   return (
     <div>
@@ -129,7 +131,7 @@ export function ExpensesTable() {
               {" "}
               {expenses
                 ?.reduce((accumualtor: number, object: Expense) => {
-                  return accumualtor + object!.cost!
+                  return accumualtor + object!.cost!;
                 }, 0)
                 .toFixed(2)}
             </td>
