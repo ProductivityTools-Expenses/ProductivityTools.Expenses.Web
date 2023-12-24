@@ -16,9 +16,9 @@ export function ExpensesTable() {
   const [categories, setCategories] = useState<Category[]>();
   const [selectedBag, setSelectedBag] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [forceRefreshCoutner, setForceRefreshCounter] = useState<number>(1);
 
   useEffect(() => {
-    debugger;
     const fetchData = async () => {
       if (query.get("bagId") != null) {
         setSelectedBag(Number(query.get("bagId")));
@@ -30,7 +30,7 @@ export function ExpensesTable() {
       setExpenses(data);
     };
     fetchData();
-  }, [selectedBag, selectedCategory]);
+  }, [selectedBag, selectedCategory, forceRefreshCoutner]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,6 +49,12 @@ export function ExpensesTable() {
     };
     fetchData();
   }, [selectedBag]);
+
+  const deleteExpense = (expenseId: number) => {
+    console.log(expenseId);
+    api.deleteExpense(expenseId);
+    setForceRefreshCounter(forceRefreshCoutner + 1);
+  };
 
   return (
     <div>
@@ -92,6 +98,7 @@ export function ExpensesTable() {
             <th>Additions</th>
             <th>Deductions</th>
             <th>Cost</th>
+            <th>Action</th>
             {/* <th>Comment</th>             */}
           </tr>
         </thead>
@@ -110,6 +117,15 @@ export function ExpensesTable() {
                   <td>{x.additions}</td>
                   <td>{x.deductions}</td>
                   <td>{x.cost}</td>
+                  <td>
+                    <button
+                      onClick={(e) => {
+                        deleteExpense(x.expenseId!);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
                   {/* <td>{x.comment}</td> */}
 
                   {/* <td>{x.comment}</td> */}

@@ -35,6 +35,11 @@ async function getExpenses(bagId: number | null, categoryId: number | null) {
   }
 }
 
+async function deleteExpense(expenseId: number) {
+  const response = await axios.post(`${config.pathBase}/Expense/Delete?expenseId=${expenseId}`);
+  return response.data;
+}
+
 async function getBags() {
   const response = await axios.get(`${config.pathBase}/Expense/BagList`);
   return response.data;
@@ -42,7 +47,7 @@ async function getBags() {
 
 async function getCategories(selectedBag: number) {
   var data = { bagId: selectedBag };
-  const response = await axios.post(`${config.pathBase}/Category/CagetoryList`,data);
+  const response = await axios.post(`${config.pathBase}/Category/CagetoryList`, data);
   return response.data;
 }
 
@@ -56,4 +61,4 @@ async function saveExpense(expense: Expense) {
   return response.data;
 }
 
-export { echo, getExpenses, getBags, getCategories, saveCategory, saveExpense };
+export { echo, getExpenses, deleteExpense, getBags, getCategories, saveCategory, saveExpense };
