@@ -4,13 +4,13 @@ import Expense from "../../Objects/Expense";
 import Bag from "../../Objects/Bag";
 import Category from "../../Objects/Category";
 import { debug } from "console";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import useQuery from "../../Tools/NavigationExtensions";
 
 export function ExpensesTable() {
   let query = useQuery();
-
+  let navigate = useNavigate();
   const [expenses, setExpenses] = useState<Expense[]>();
   const [bags, setBags] = useState<Bag[]>();
   const [categories, setCategories] = useState<Category[]>();
@@ -54,6 +54,10 @@ export function ExpensesTable() {
     console.log(expenseId);
     api.deleteExpense(expenseId);
     setForceRefreshCounter(forceRefreshCoutner + 1);
+  };
+  const editExpense = (expenseId: number) => {
+    console.log(expenseId);
+    navigate("/ExpenseEdit");
   };
 
   return (
@@ -124,6 +128,13 @@ export function ExpensesTable() {
                       }}
                     >
                       Delete
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        editExpense(x.expenseId!);
+                      }}
+                    >
+                      edit
                     </button>
                   </td>
                   {/* <td>{x.comment}</td> */}
