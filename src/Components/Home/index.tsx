@@ -7,11 +7,18 @@ export function Home() {
   return (
     <div>
       home
-      <a href="\Expenses">Expenses</a>
-      <a href="\ExpenseEdit">ExpenseEdit</a>
-      <a href="\CategoryEdit">CategoryEdit</a>
-      <a href="\Login">Login</a>
-      <button onClick={logout}>logout</button>
+      <ul>
+        <li><a href="\Expenses">Expenses</a></li>
+        <li><a href="\ExpenseAdd">Add Expense</a></li>
+        <li><a href="\CategoryEdit">Add Category</a></li>
+        <li><a href="\Login">Login</a></li>
+        <li><button onClick={logout}>logout</button></li>
+      </ul>
+      
+      
+      
+      
+      
       <Echo></Echo>
     </div>
   );

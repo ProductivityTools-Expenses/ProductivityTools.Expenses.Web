@@ -57,7 +57,7 @@ export function ExpensesTable() {
   };
   const editExpense = (expenseId: number) => {
     console.log(expenseId);
-    navigate("/ExpenseEdit");
+    navigate("/ExpenseEdit/"+expenseId);
   };
 
   return (

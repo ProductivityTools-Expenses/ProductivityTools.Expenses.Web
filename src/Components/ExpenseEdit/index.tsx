@@ -3,9 +3,14 @@ import * as api from "../../Services/apiService";
 import Bag from "../../Objects/Bag";
 import Category from "../../Objects/Category";
 import Expense from "../../Objects/Expense";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { debug } from "console";
 
 export function ExpenseEdit() {
+  let { expenseId } = useParams();
+  console.log("expenseid param");
+  console.log(expenseId);
+
   let navigate = useNavigate();
   const [bags, setBags] = useState<Bag[]>();
   const [categories, setCategories] = useState<Category[]>();
@@ -36,6 +41,16 @@ export function ExpenseEdit() {
       return `${year}-${month}-${day}`;
     }
   }
+
+  useEffect(() => {
+    const getExpense = async () => {
+      let data = await api.getExpense(Number(expenseId));
+      if (data != null) {
+        setExpense(data);
+      }
+    };
+    getExpense();
+  }, [expenseId]);
 
   useEffect(() => {
     const getCategories = async () => {
@@ -84,7 +99,7 @@ export function ExpenseEdit() {
       </p>
       <p>
         Name
-        <input type="text" name="name" onChange={updateStringValue}></input>
+        <input type="text" name="name" value={expense.name || ""} onChange={updateStringValue}></input>
       </p>
       <p>
         Bag

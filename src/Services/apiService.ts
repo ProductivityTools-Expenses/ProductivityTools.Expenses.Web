@@ -35,6 +35,26 @@ async function getExpenses(bagId: number | null, categoryId: number | null) {
   }
 }
 
+async function getExpense(expenseId: number) {
+  let idToken = await auth.currentUser?.getIdToken();
+  if (idToken == null) {
+    console.log("id token from auth empty, trying to get from localstorage");
+    idToken = String(localStorage.getItem("token"));
+  }
+  //let
+  if (idToken) {
+    const header = {
+      headers: { Authorization: `Bearer ${idToken}` },
+    };
+
+    var data = { expenseId: expenseId };
+    const response = await axios.post(`${config.pathBase}/Expense/Get`, data, header);
+    return response.data;
+  } else {
+    console.log("idtoken empty");
+  }
+}
+
 async function deleteExpense(expenseId: number) {
   const response = await axios.post(`${config.pathBase}/Expense/Delete?expenseId=${expenseId}`);
   return response.data;
@@ -61,4 +81,4 @@ async function saveExpense(expense: Expense) {
   return response.data;
 }
 
-export { echo, getExpenses, deleteExpense, getBags, getCategories, saveCategory, saveExpense };
+export { echo, getExpenses, getExpense, deleteExpense, getBags, getCategories, saveCategory, saveExpense };
