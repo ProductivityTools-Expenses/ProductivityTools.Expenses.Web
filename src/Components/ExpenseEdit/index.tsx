@@ -17,17 +17,17 @@ export function ExpenseEdit() {
   console.log("UseState");
   const [expense, setExpense] = useState<Expense>({
     expenseId: null,
-    name: "",
+    name: "xx",
     date: formatISODate(new Date()),
     bagId: null,
     bag: null,
     categoryId: null,
     category: null,
     amount: 0,
-    price: null,
+    price: 0,
     value: null,
-    deductions: null,
-    additions: null,
+    deductions: 0,
+    additions: 0,
     cost: null,
     comment: null,
   });
@@ -46,12 +46,15 @@ export function ExpenseEdit() {
   useEffect(() => {
     const getExpense = async () => {
       let data = await api.getExpense(Number(expenseId));
+      debugger;
       if (data != null) {
         setExpense(data);
         console.log("setExpense data", data);
       }
     };
-    getExpense();
+    if (expenseId != null) {
+      getExpense();
+    }
   }, [expenseId]);
 
   useEffect(() => {
@@ -59,7 +62,7 @@ export function ExpenseEdit() {
       if (expense.bagId != null) {
         const data = await api.getCategories(expense.bagId);
         setCategories(data);
-        if (expense.expenseId == null) {
+        if (expense.expenseId == null && expenseId == null) {
           setExpense({ ...expense, categoryId: data[0].categoryId } as Expense);
         }
       }
@@ -70,7 +73,7 @@ export function ExpenseEdit() {
   useEffect(() => {
     const getBags = async () => {
       const data = await api.getBags();
-      if (expense.expenseId == null) {
+      if (expense.expenseId == null && expenseId == null) {
         setExpense({ ...expense, bagId: data[0].bagId } as Expense);
       }
       setBags(data);
@@ -105,7 +108,7 @@ export function ExpenseEdit() {
       </p>
       <p>
         Bag
-        <select name="bagId" onChange={updateNumberValue}>
+        <select name="bagId" value={expense.bagId || -1} onChange={updateNumberValue}>
           {bags?.map((oneBag) => {
             return (
               <option key={oneBag.bagId} value={oneBag.bagId}>
@@ -117,7 +120,7 @@ export function ExpenseEdit() {
       </p>
       <p>
         Category
-        <select name="categoryId" onChange={updateNumberValue}>
+        <select name="categoryId" value={expense.categoryId || -1} onChange={updateNumberValue}>
           {categories?.map((category) => {
             return (
               <option key={category.categoryId} value={category.categoryId || -1}>
@@ -131,25 +134,27 @@ export function ExpenseEdit() {
         Date<input name="date" type="text" value={expense?.date || ""} onChange={updateStringValue}></input>
       </p>
       <p>
-        Amount<input name="amount" type="text" onChange={updateNumberValue}></input>
+        Amount<input name="amount" type="text" value={expense.amount || 0} onChange={updateNumberValue}></input>
       </p>
       <p>
-        Price<input name="price" type="text" onChange={updateNumberValue}></input>
+        Price<input name="price" type="text" value={expense.price || 0} onChange={updateNumberValue}></input>
       </p>
       <p>
         Value<input type="text" disabled={true}></input>
       </p>
       <p>
-        Deductions<input name="deductions" type="text" onChange={updateNumberValue}></input>
+        Deductions
+        <input name="deductions" type="text" value={expense.deductions || 0} onChange={updateNumberValue}></input>
       </p>
       <p>
-        Additions<input name="additions" type="text" onChange={updateNumberValue}></input>
+        Additions
+        <input name="additions" type="text" value={expense.additions || 0} onChange={updateNumberValue}></input>
       </p>
       <p>
         Cost<input type="text" disabled={true}></input>
       </p>
       <p>
-        Comment<input name="comment" type="text" onChange={updateStringValue}></input>
+        Comment<input name="comment" type="text" value={expense.comment || ""} onChange={updateStringValue}></input>
       </p>
       <button onClick={add}>add</button>
     </div>
