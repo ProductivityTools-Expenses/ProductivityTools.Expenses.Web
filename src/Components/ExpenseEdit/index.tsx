@@ -14,6 +14,7 @@ export function ExpenseEdit() {
   let navigate = useNavigate();
   const [bags, setBags] = useState<Bag[]>();
   const [categories, setCategories] = useState<Category[]>();
+  console.log("UseState");
   const [expense, setExpense] = useState<Expense>({
     expenseId: null,
     name: "",
@@ -47,6 +48,7 @@ export function ExpenseEdit() {
       let data = await api.getExpense(Number(expenseId));
       if (data != null) {
         setExpense(data);
+        console.log("setExpense data", data);
       }
     };
     getExpense();
