@@ -4,7 +4,7 @@ import Expense from "../../Objects/Expense";
 import Bag from "../../Objects/Bag";
 import Category from "../../Objects/Category";
 import { debug } from "console";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import useQuery from "../../Tools/NavigationExtensions";
 
@@ -14,23 +14,27 @@ export function ExpensesTable() {
   const [expenses, setExpenses] = useState<Expense[]>();
   const [bags, setBags] = useState<Bag[]>();
   const [categories, setCategories] = useState<Category[]>();
-  const [selectedBag, setSelectedBag] = useState<number | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  // const [selectedBag, setSelectedBag] = useState<number | null>(null);
+  // const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [forceRefreshCoutner, setForceRefreshCounter] = useState<number>(1);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const qBagId = Number(searchParams.get("bagId"));
+  const qCategoryId = Number(searchParams.get("categoryId"));
 
   useEffect(() => {
     const fetchData = async () => {
-      if (query.get("bagId") != null) {
-        setSelectedBag(Number(query.get("bagId")));
-      }
-      if (query.get("categoryId") != null) {
-        setSelectedCategory(Number(query.get("categoryId")));
-      }
-      const data = await api.getExpenses(selectedBag, selectedCategory);
+      // if (qBagId != null) {
+      //   setSelectedBag(qBagId);
+      // }
+      // if (qCategoryId != null) {
+      //   setSelectedCategory(qCategoryId);
+      // }
+      const data = await api.getExpenses(qBagId, qCategoryId);
       setExpenses(data);
     };
     fetchData();
-  }, [selectedBag, selectedCategory, forceRefreshCoutner]);
+  }, [qBagId, qCategoryId, forceRefreshCoutner]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,13 +46,13 @@ export function ExpensesTable() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (selectedBag != null) {
-        const data = await api.getCategories(selectedBag);
+      if (qBagId != null) {
+        const data = await api.getCategories(qBagId);
         setCategories(data);
       }
     };
     fetchData();
-  }, [selectedBag]);
+  }, [qBagId]);
 
   const deleteExpense = (expenseId: number) => {
     console.log(expenseId);
@@ -57,7 +61,7 @@ export function ExpensesTable() {
   };
   const editExpense = (expenseId: number) => {
     console.log(expenseId);
-    navigate("/ExpenseEdit/"+expenseId);
+    navigate("/ExpenseEdit/" + expenseId);
   };
 
   return (
@@ -66,10 +70,21 @@ export function ExpensesTable() {
       <Link to="/">Home</Link>
       <span>
         {" "}
-        selectedBag: {selectedBag} selectedCategory:{selectedCategory}
+        selectedBag: {qBagId} selectedCategory:{qCategoryId}
       </span>
       <br />
-      <select name="bags" value={selectedBag?.toString()} onChange={(e) => setSelectedBag(Number(e.target.value))}>
+      <select
+        name="bags"
+        value={qBagId?.toString()}
+        onChange={(e) => {
+          setSearchParams((params) => {
+            params.set("bagId", JSON.parse(e.target.value));
+            return params;
+          });
+
+          console.log("xx");
+        }}
+      >
         {bags?.map((x: Bag) => (
           <option key={x.bagId} value={x.bagId}>
             {x.name}
@@ -78,8 +93,14 @@ export function ExpensesTable() {
       </select>
       <select
         name="categories"
-        value={selectedCategory?.toString()}
-        onChange={(e) => setSelectedCategory(Number(e.target.value))}
+        value={qCategoryId?.toString()}
+        onChange={(e) => {
+          setSearchParams((params) => {
+            params.set("categoryId", JSON.parse(e.target.value));
+            return params;
+          });
+          console.log("fdsaf");
+        }}
       >
         {categories?.map((x: Category) => (
           <option key={x.categoryId} value={x.categoryId || -1}>
