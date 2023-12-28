@@ -7,9 +7,12 @@ export default interface Expense {
   date: string | null;
   amount: number | null;
   price: number | null;
+  priceString: string | null;
   value: number | null;
   deductions: number | null;
+  deductionsString: string | null;
   additions: number | null;
+  additionsString: string | null;
   cost: number | null;
   comment: string | null;
 

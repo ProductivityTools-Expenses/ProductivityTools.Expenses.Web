@@ -25,9 +25,12 @@ export function ExpenseEdit() {
     category: null,
     amount: 0,
     price: 0,
+    priceString: "0",
     value: null,
     deductions: 0,
+    deductionsString: "0",
     additions: 0,
+    additionsString: "0",
     cost: null,
     comment: null,
   });
@@ -92,7 +95,13 @@ export function ExpenseEdit() {
   };
 
   const updateNumberValue = (e: any) => {
-    setExpense({ ...expense, [e.target.name]: Number(e.target.value) } as Expense);
+    console.log("numbervalue", e.target.value);
+    let valueString: string = e.target.value;
+    let valueFloat = parseFloat(valueString.replace(",", "."));
+
+    let stringName: string = e.target.name;
+    let name: string = stringName.replace("String", "");
+    setExpense({ ...expense, [name]: valueFloat, [stringName]: valueString } as Expense);
   };
 
   return (
@@ -134,21 +143,22 @@ export function ExpenseEdit() {
         Date<input name="date" type="text" value={expense?.date || ""} onChange={updateStringValue}></input>
       </p>
       <p>
-        Amount<input name="amount" type="text" value={expense.amount || 0} onChange={updateNumberValue}></input>
+        Amount<input name="amountString" type="text" value={expense.amount || 0} onChange={updateNumberValue}></input>
       </p>
       <p>
-        Price<input name="price" type="text" value={expense.price || 0} onChange={updateNumberValue}></input>
+        Price
+        <input name="priceString" type="text" value={expense.priceString || ""} onChange={updateNumberValue}></input>
       </p>
       <p>
         Value<input type="text" disabled={true}></input>
       </p>
       <p>
         Deductions
-        <input name="deductions" type="text" value={expense.deductions || 0} onChange={updateNumberValue}></input>
+        <input name="deductionsString" type="text" value={expense.deductions || 0} onChange={updateNumberValue}></input>
       </p>
       <p>
         Additions
-        <input name="additions" type="text" value={expense.additions || 0} onChange={updateNumberValue}></input>
+        <input name="additionsString" type="text" value={expense.additions || 0} onChange={updateNumberValue}></input>
       </p>
       <p>
         Cost<input type="text" disabled={true}></input>
