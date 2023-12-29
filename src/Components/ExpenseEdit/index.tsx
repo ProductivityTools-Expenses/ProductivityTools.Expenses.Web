@@ -120,7 +120,7 @@ export function ExpenseEdit() {
         <select name="bagId" value={expense.bagId || -1} onChange={updateNumberValue}>
           {bags?.map((oneBag) => {
             return (
-              <option key={oneBag.bagId} value={oneBag.bagId}>
+              <option key={oneBag.bagId} value={oneBag.bagId!}>
                 {oneBag.name}
               </option>
             );
@@ -154,11 +154,21 @@ export function ExpenseEdit() {
       </p>
       <p>
         Deductions
-        <input name="deductionsString" type="text" value={expense.deductions || 0} onChange={updateNumberValue}></input>
+        <input
+          name="deductionsString"
+          type="text"
+          value={expense.deductionsString || ""}
+          onChange={updateNumberValue}
+        ></input>
       </p>
       <p>
         Additions
-        <input name="additionsString" type="text" value={expense.additions || 0} onChange={updateNumberValue}></input>
+        <input
+          name="additionsString"
+          type="text"
+          value={expense.additionsString || ""}
+          onChange={updateNumberValue}
+        ></input>
       </p>
       <p>
         Cost<input type="text" disabled={true}></input>
@@ -167,6 +177,13 @@ export function ExpenseEdit() {
         Comment<input name="comment" type="text" value={expense.comment || ""} onChange={updateStringValue}></input>
       </p>
       <button onClick={add}>add</button>
+      <button
+        onClick={() => {
+          navigate("/Expenses");
+        }}
+      >
+        cancel
+      </button>
     </div>
   );
 }

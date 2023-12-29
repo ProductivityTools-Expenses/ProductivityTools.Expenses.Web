@@ -1,5 +1,5 @@
 export default interface Bag {
-  bagId: number;
+  bagId: number | null;
   name: string | null;
-  descriptoin: string | null;
+  description: string | null;
 }

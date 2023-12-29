@@ -86,7 +86,7 @@ export function ExpensesTable() {
         }}
       >
         {bags?.map((x: Bag) => (
-          <option key={x.bagId} value={x.bagId}>
+          <option key={x.bagId} value={x.bagId!}>
             {x.name}
           </option>
         ))}
