@@ -61,7 +61,7 @@ async function deleteExpense(expenseId: number) {
 }
 
 async function getBags() {
-  const response = await axios.get(`${config.pathBase}/Expense/BagList`);
+  const response = await axios.get(`${config.pathBase}/Bag/BagList`);
   return response.data;
 }
 

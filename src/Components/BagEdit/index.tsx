@@ -19,6 +19,7 @@ export function BagEdit() {
 
   return (
     <div>
+        BagEdit page
       <p>
         Value<input name="name" type="text" onChange={() => {}}></input>
       </p>
