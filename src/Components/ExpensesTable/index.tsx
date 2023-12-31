@@ -38,7 +38,7 @@ export function ExpensesTable() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await api.getBags();
+      const data = await api.bagsGet();
       setBags(data);
     };
     fetchData();

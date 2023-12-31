@@ -9,9 +9,9 @@ export function BagEdit() {
     description: "",
   });
 
-  //   const add = async () => {
-  //     var r = await api.saveCategory(category);
-  //   };
+  const add = async () => {
+    var r = await api.bagSave(bag);
+  };
 
   //   const updateStringValue = (e: any) => {
   //     setCategory({ ...category, [e.target.name]: e.target.value } as Category);
@@ -19,11 +19,21 @@ export function BagEdit() {
 
   return (
     <div>
-        BagEdit page
+      BagEdit page
       <p>
-        Value<input name="name" type="text" onChange={() => {}}></input>
+        Bag: id: {bag.bagId} name:{bag.name}, description:{bag.description}
       </p>
-      <button onClick={() => {}}>add</button>
+      <p>
+        Value
+        <input
+          name="name"
+          type="text"
+          onChange={(e) => {
+            setBag({ ...bag, name: e.target.value });
+          }}
+        ></input>
+      </p>
+      <button onClick={add}>add</button>
     </div>
   );
 }

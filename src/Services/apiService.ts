@@ -3,6 +3,7 @@ import { config } from "../Config";
 import { auth } from "../Session/firebase";
 import Expense from "../Objects/Expense";
 import Category from "../Objects/Category";
+import Bag from "../Objects/Bag";
 
 async function echo() {
   const response = await axios.get(`${config.pathBase}/Expense/echo?name=pawel`);
@@ -60,8 +61,13 @@ async function deleteExpense(expenseId: number) {
   return response.data;
 }
 
-async function getBags() {
+async function bagsGet() {
   const response = await axios.get(`${config.pathBase}/Bag/BagList`);
+  return response.data;
+}
+
+async function bagSave(bag: Bag) {
+  const response = await axios.post(`${config.pathBase}/Bag/Save`, bag);
   return response.data;
 }
 
@@ -81,4 +87,4 @@ async function saveExpense(expense: Expense) {
   return response.data;
 }
 
-export { echo, getExpenses, getExpense, deleteExpense, getBags, getCategories, saveCategory, saveExpense };
+export { echo, getExpenses, getExpense, deleteExpense, bagsGet,bagSave, getCategories, saveCategory, saveExpense };

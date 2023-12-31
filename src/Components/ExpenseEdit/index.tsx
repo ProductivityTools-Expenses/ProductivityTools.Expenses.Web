@@ -75,7 +75,7 @@ export function ExpenseEdit() {
 
   useEffect(() => {
     const getBags = async () => {
-      const data = await api.getBags();
+      const data = await api.bagsGet();
       if (expense.expenseId == null && expenseId == null) {
         setExpense({ ...expense, bagId: data[0].bagId } as Expense);
       }
