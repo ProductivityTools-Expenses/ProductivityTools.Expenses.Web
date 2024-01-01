@@ -18,7 +18,7 @@ export function BagEdit() {
 
   const add = async () => {
     var r = await api.bagSave(bag);
-    navigate("/Bags")
+    navigate("/BagsTable")
   };
 
   //   const updateStringValue = (e: any) => {

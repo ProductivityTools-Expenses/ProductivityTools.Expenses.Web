@@ -25,7 +25,6 @@ function App() {
             <Route path="/ExpenseEdit/:expenseId" element={<ExpenseEdit />} />
             <Route path="/BagAdd" element={<BagEdit />} />
             <Route path="/BagsTable" element={<BagsTable />} />
-
             <Route path="/CategoryEdit" element={<CategoryEdit />} />
           </Routes>
         </AuthProvider>
