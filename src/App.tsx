@@ -9,6 +9,7 @@ import { AuthProvider } from "./Session/AuthContext";
 import Login from "./Session/Login";
 import { CategoryEdit } from "./Components/CategoryEdit";
 import { BagEdit } from "./Components/BagEdit";
+import { BagsTable } from "./Components/BagsTable";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
             <Route path="/ExpenseAdd" element={<ExpenseEdit />} />
             <Route path="/ExpenseEdit/:expenseId" element={<ExpenseEdit />} />
             <Route path="/BagAdd" element={<BagEdit />} />
+            <Route path="/BagsTable" element={<BagsTable />} />
+
             <Route path="/CategoryEdit" element={<CategoryEdit />} />
           </Routes>
         </AuthProvider>

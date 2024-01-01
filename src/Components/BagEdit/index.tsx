@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import * as api from "../../Services/apiService";
 import Bag from "../../Objects/Bag";
+import { useNavigate, useParams } from "react-router-dom";
+
+
 
 export function BagEdit() {
+
+    let navigate = useNavigate();
+
+
   const [bag, setBag] = useState<Bag>({
     bagId: null,
     name: "",
@@ -11,6 +18,7 @@ export function BagEdit() {
 
   const add = async () => {
     var r = await api.bagSave(bag);
+    navigate("/Bags")
   };
 
   //   const updateStringValue = (e: any) => {
