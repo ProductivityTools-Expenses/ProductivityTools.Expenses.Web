@@ -66,6 +66,11 @@ async function bagsGet() {
   return response.data;
 }
 
+async function bagGet(bagId: Number) {
+  const response = await axios.get(`${config.pathBase}/Bag/Get?bagId=${bagId}`);
+  return response.data;
+}
+
 async function bagSave(bag: Bag) {
   const response = await axios.post(`${config.pathBase}/Bag/Save`, bag);
   return response.data;
@@ -87,4 +92,15 @@ async function saveExpense(expense: Expense) {
   return response.data;
 }
 
-export { echo, getExpenses, getExpense, deleteExpense, bagsGet,bagSave, getCategories, saveCategory, saveExpense };
+export {
+  echo,
+  getExpenses,
+  getExpense,
+  deleteExpense,
+  bagsGet,
+  bagGet,
+  bagSave,
+  getCategories,
+  saveCategory,
+  saveExpense,
+};

@@ -24,6 +24,7 @@ function App() {
             <Route path="/ExpenseAdd" element={<ExpenseEdit />} />
             <Route path="/ExpenseEdit/:expenseId" element={<ExpenseEdit />} />
             <Route path="/BagAdd" element={<BagEdit />} />
+            <Route path="/BagEdit/:bagId" element={<BagEdit />} />
             <Route path="/BagsTable" element={<BagsTable />} />
             <Route path="/CategoryEdit" element={<CategoryEdit />} />
           </Routes>

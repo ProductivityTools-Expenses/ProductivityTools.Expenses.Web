@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import * as api from "../../Services/apiService";
 import Bag from "../../Objects/Bag";
-import { useNavigate, useParams } from "react-router-dom";
-
-
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export function BagEdit() {
-
-    let navigate = useNavigate();
-
+  let navigate = useNavigate();
+  let { bagId } = useParams();
 
   const [bag, setBag] = useState<Bag>({
     bagId: null,
@@ -16,9 +13,19 @@ export function BagEdit() {
     description: "",
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await api.bagGet(Number(bagId));
+      setBag(data);
+    };
+    if (bagId != null) {
+      fetchData();
+    }
+  }, [bagId]);
+
   const add = async () => {
     var r = await api.bagSave(bag);
-    navigate("/BagsTable")
+    navigate("/BagsTable");
   };
 
   //   const updateStringValue = (e: any) => {
@@ -36,12 +43,14 @@ export function BagEdit() {
         <input
           name="name"
           type="text"
+          value={bag.name || ""}
           onChange={(e) => {
             setBag({ ...bag, name: e.target.value });
           }}
         ></input>
       </p>
       <button onClick={add}>add</button>
+      <Link to="/BagsTable">Cancel</Link>
     </div>
   );
 }
