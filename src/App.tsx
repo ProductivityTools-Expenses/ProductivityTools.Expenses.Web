@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { AuthProvider } from "./Session/AuthContext";
 import Login from "./Session/Login";
 import { CategoryEdit } from "./Components/CategoryEdit";
+import { CategoriesTable } from "./Components/CategoriesTable";
 import { BagEdit } from "./Components/BagEdit";
 import { BagsTable } from "./Components/BagsTable";
 
@@ -27,6 +28,8 @@ function App() {
             <Route path="/BagEdit/:bagId" element={<BagEdit />} />
             <Route path="/BagsTable" element={<BagsTable />} />
             <Route path="/CategoryEdit" element={<CategoryEdit />} />
+            <Route path="/CategoriesTable" element={<CategoriesTable />} />
+
           </Routes>
         </AuthProvider>
       </BrowserRouter>

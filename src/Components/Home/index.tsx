@@ -14,6 +14,7 @@ export function Home() {
         <li><a href="\Login">Login</a></li>
         <li><a href="\BagAdd">Add Bag</a></li>
         <li><a href="\BagsTable">Bags Table</a></li>
+        <li><a href="\CategoriesTable">Categories Table</a></li>
         <li><button onClick={logout}>logout</button></li>
       </ul>
       

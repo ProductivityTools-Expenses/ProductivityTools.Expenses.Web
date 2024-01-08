@@ -82,6 +82,11 @@ async function getCategories(selectedBag: number) {
   return response.data;
 }
 
+async function getCategoriesAll() {
+  const response = await axios.get(`${config.pathBase}/Category/CategoryListAll`);
+  return response.data;
+}
+
 async function saveCategory(category: Category) {
   const response = await axios.post(`${config.pathBase}/Category/CategorySave`, category);
   return response.data;
@@ -101,6 +106,7 @@ export {
   bagGet,
   bagSave,
   getCategories,
+  getCategoriesAll,
   saveCategory,
   saveExpense,
 };
