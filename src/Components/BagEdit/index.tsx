@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import * as api from "../../Services/apiService";
 import Bag from "../../Objects/Bag";
+import Category from "../../Objects/Category";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 export function BagEdit() {
@@ -13,6 +14,8 @@ export function BagEdit() {
     description: "",
   });
 
+  const [categories, setCategories] = useState<Category[]>()
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await api.bagGet(Number(bagId));
@@ -22,6 +25,18 @@ export function BagEdit() {
       fetchData();
     }
   }, [bagId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (bag && bag.bagId) {
+        const data = await api.getCategories(bag.bagId)
+        setCategories(data);
+      }
+    }
+
+    fetchData()
+
+  }, [bag.bagId])
 
   const add = async () => {
     var r = await api.bagSave(bag);
@@ -48,6 +63,9 @@ export function BagEdit() {
             setBag({ ...bag, name: e.target.value });
           }}
         ></input>
+        <div>
+          {categories?.map(x => <div>{x.name}</div>)}
+        </div>
       </p>
       <button onClick={add}>add</button>
       <Link to="/BagsTable">Cancel</Link>
