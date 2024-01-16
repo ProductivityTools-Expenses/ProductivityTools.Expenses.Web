@@ -15,6 +15,9 @@ export function BagEdit() {
   });
 
   const [categories, setCategories] = useState<Category[]>()
+  const [allCategories, setAllCategories] = useState<Category[]>()
+
+  const [selectedNewCategoryId, setSelectedNewCategoryId] = useState<string>()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +40,17 @@ export function BagEdit() {
     fetchData()
 
   }, [bag.bagId])
+
+  useEffect(() => {
+    const fetchData = async () => {
+        const data = await api.getCategoriesAll()
+        setAllCategories(data);
+      
+    }
+
+    fetchData()
+
+  }, [])
 
   const add = async () => {
     var r = await api.bagSave(bag);
@@ -63,12 +77,27 @@ export function BagEdit() {
             setBag({ ...bag, name: e.target.value });
           }}
         ></input>
-        <div>
+        <div>categories assigned ot this bag:
           {categories?.map(x => <div>{x.name}</div>)}
         </div>
       </p>
-      <button onClick={add}>add</button>
+      <button onClick={add}>addBag</button>
       <Link to="/BagsTable">Cancel</Link>
+
+      <select
+        name="categories"
+        value={selectedNewCategoryId}
+        onChange={(e) => {
+          setSelectedNewCategoryId(e.target.value);
+          console.log("fdsaf");
+        }}
+      >
+        {allCategories?.map((x: Category) => (
+          <option key={x.categoryId} value={x.categoryId || -1}>
+            {x.name}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
