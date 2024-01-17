@@ -43,9 +43,9 @@ export function BagEdit() {
 
   useEffect(() => {
     const fetchData = async () => {
-        const data = await api.getCategoriesAll()
-        setAllCategories(data);
-      
+      const data = await api.getCategoriesAll()
+      setAllCategories(data);
+
     }
 
     fetchData()
@@ -60,6 +60,13 @@ export function BagEdit() {
   //   const updateStringValue = (e: any) => {
   //     setCategory({ ...category, [e.target.name]: e.target.value } as Category);
   //   };
+
+  const addCategoryToBag = async () => {
+    let selectedCategory = allCategories?.find(x => x.categoryId == Number(selectedNewCategoryId));
+    if (categories && selectedCategory) {
+      setCategories([...categories, selectedCategory])
+    }
+  }
 
   return (
     <div>
@@ -83,7 +90,7 @@ export function BagEdit() {
       </p>
       <button onClick={add}>addBag</button>
       <Link to="/BagsTable">Cancel</Link>
-
+      <br></br>
       <select
         name="categories"
         value={selectedNewCategoryId}
@@ -98,6 +105,8 @@ export function BagEdit() {
           </option>
         ))}
       </select>
+      <br></br>
+      <button onClick={addCategoryToBag}>add category to the bag</button>
     </div>
   );
 }
