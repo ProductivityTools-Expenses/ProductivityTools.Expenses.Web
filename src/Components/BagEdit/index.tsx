@@ -12,6 +12,7 @@ export function BagEdit() {
     bagId: null,
     name: "",
     description: "",
+    categories: null
   });
 
   const [categories, setCategories] = useState<Category[]>()
@@ -52,8 +53,8 @@ export function BagEdit() {
 
   }, [])
 
-  const add = async () => {
-    var r = await api.bagSave(bag);
+  const save = async () => {
+    var r = await api.bagSave(bag, categories);
     navigate("/BagsTable");
   };
 
@@ -88,7 +89,7 @@ export function BagEdit() {
           {categories?.map(x => <div>{x.name}</div>)}
         </div>
       </p>
-      <button onClick={add}>addBag</button>
+      <button onClick={save}>Save</button>
       <Link to="/BagsTable">Cancel</Link>
       <br></br>
       <select

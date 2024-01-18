@@ -71,8 +71,9 @@ async function bagGet(bagId: Number) {
   return response.data;
 }
 
-async function bagSave(bag: Bag) {
-  const response = await axios.post(`${config.pathBase}/Bag/Save`, bag);
+async function bagSave(bag: Bag, categories: Category[] | undefined) {
+  const data = { bag: bag, categories: categories }
+  const response = await axios.post(`${config.pathBase}/Bag/Save`, data);
   return response.data;
 }
 
