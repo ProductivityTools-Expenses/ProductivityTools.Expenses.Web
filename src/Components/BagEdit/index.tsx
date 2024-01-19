@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import * as api from "../../Services/apiService";
 import Bag from "../../Objects/Bag";
 import Category from "../../Objects/Category";
+import BagCategoryEdit from "../../Objects/BagCategoryEdit"
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 export function BagEdit() {
@@ -15,7 +16,7 @@ export function BagEdit() {
     categories: null
   });
 
-  const [categories, setCategories] = useState<Category[]>()
+  const [categories, setCategories] = useState<BagCategoryEdit[]>()
   const [allCategories, setAllCategories] = useState<Category[]>()
 
   const [selectedNewCategoryId, setSelectedNewCategoryId] = useState<string>()
@@ -67,6 +68,7 @@ export function BagEdit() {
     if (categories && selectedCategory) {
       setCategories([...categories, selectedCategory])
     }
+    console.log("categories", categories);
   }
 
   return (
