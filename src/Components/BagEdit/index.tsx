@@ -67,7 +67,7 @@ export function BagEdit() {
   const addCategoryToBag = async () => {
     let selectedCategory = allCategories?.find(x => x.categoryId == Number(selectedNewCategoryId));
     if (categories && selectedCategory) {
-      setCategories([...categories, { categoryId:selectedCategory.categoryId, name:selectedCategory.name, bagCategoryId:Number(bagId) }])
+      setCategories([...categories, { categoryId:selectedCategory.categoryId, name:selectedCategory.name, bagCategoryId:null }])
     }
     console.log("categories", categories);
   }
