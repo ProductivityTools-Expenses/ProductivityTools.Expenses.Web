@@ -50,6 +50,10 @@ async function getExpense(expenseId: number) {
 
     var data = { expenseId: expenseId };
     const response = await axios.post(`${config.pathBase}/Expense/Get`, data, header);
+    let ex:Expense=response.data
+    ex.priceString=ex.price?.toString() || "0";
+    ex.deductionsString=ex.deductions?.toString() || "0";
+    ex.additionsString=ex.additions?.toString() || "0";
     return response.data;
   } else {
     console.log("idtoken empty");

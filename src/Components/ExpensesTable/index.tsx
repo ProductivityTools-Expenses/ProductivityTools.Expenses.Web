@@ -136,8 +136,8 @@ export function ExpensesTable() {
                   <td>{x.category?.name}</td>
                   <td>{x.name}</td>
                   <td>{x.date?.toString()}</td>
-                  <td>{x.price}</td>
                   <td>{x.amount}</td>
+                  <td>{x.price}</td>
                   <td>{x.value}</td>
                   <td>{x.additions}</td>
                   <td>{x.deductions}</td>

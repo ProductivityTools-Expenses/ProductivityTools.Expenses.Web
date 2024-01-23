@@ -49,7 +49,6 @@ export function ExpenseEdit() {
   useEffect(() => {
     const getExpense = async () => {
       let data = await api.getExpense(Number(expenseId));
-      debugger;
       if (data != null) {
         setExpense(data);
         console.log("setExpense data", data);
@@ -108,7 +107,7 @@ export function ExpenseEdit() {
     <div>
       <p>
         Name:{expense?.name} bagid: {expense?.bagId}, categoryId:{expense?.categoryId}, date:{String(expense?.date)},
-        amount: {expense?.amount}, price: {expense?.price}, deductions:{expense?.deductions}, additions:{" "}
+        amount: {expense?.amount}, price: {expense?.price}, priceString:{expense?.priceString} deductions:{expense?.deductions}, additions:{" "}
         {expense?.additions}, comment:{expense?.comment}
       </p>
       <p>
