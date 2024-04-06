@@ -78,9 +78,7 @@ export function BagEdit() {
     if (category.bagCategoryId) {
       setbagCategoryIdsToRemove([...bagCategoryIdsToRemove, category.bagCategoryId])
     }
-    else {
-
-    }
+    setCategories(x => x?.filter(item => item.categoryId !== category.categoryId && item.name !== category.name))
   }
 
   return (
