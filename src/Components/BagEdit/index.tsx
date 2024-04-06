@@ -4,6 +4,7 @@ import Bag from "../../Objects/Bag";
 import Category from "../../Objects/Category";
 import BagCategoryEdit from "../../Objects/BagCategoryEdit"
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { debug } from "console";
 
 export function BagEdit() {
   let navigate = useNavigate();
@@ -18,8 +19,8 @@ export function BagEdit() {
 
   const [categories, setCategories] = useState<BagCategoryEdit[]>()
   const [allCategories, setAllCategories] = useState<Category[]>()
-
   const [selectedNewCategoryId, setSelectedNewCategoryId] = useState<string>()
+  const [bagCategoryIdsToRemove, setbagCategoryIdsToRemove] = useState<number[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +58,7 @@ export function BagEdit() {
 
   const save = async () => {
     var r = await api.bagSave(bag, categories);
+    var r = await api.removeCategoryFromBagCategory(bagCategoryIdsToRemove);
     navigate("/BagsTable");
   };
 
@@ -67,9 +69,18 @@ export function BagEdit() {
   const addCategoryToBag = async () => {
     let selectedCategory = allCategories?.find(x => x.categoryId == Number(selectedNewCategoryId));
     if (categories && selectedCategory) {
-      setCategories([...categories, { categoryId:selectedCategory.categoryId, name:selectedCategory.name, bagCategoryId:null }])
+      setCategories([...categories, { categoryId: selectedCategory.categoryId, name: selectedCategory.name, bagCategoryId: null }])
     }
     console.log("categories", categories);
+  }
+
+  const removeCategoryFromTheBag = async (category: BagCategoryEdit) => {
+    if (category.bagCategoryId) {
+      setbagCategoryIdsToRemove([...bagCategoryIdsToRemove, category.bagCategoryId])
+    }
+    else {
+
+    }
   }
 
   return (
@@ -89,7 +100,12 @@ export function BagEdit() {
           }}
         ></input>
         <div>categories assigned ot this bag:
-          {categories?.map(x => <div>{x.name}</div>)}
+          {categories?.map(category => (
+            <div>{category.name}
+              <button onClick={(x => removeCategoryFromTheBag(category))}>Remove</button>
+            </div>
+          ))}
+
         </div>
       </p>
       <button onClick={save}>Save</button>

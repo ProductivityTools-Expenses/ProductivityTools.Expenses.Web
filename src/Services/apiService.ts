@@ -50,10 +50,10 @@ async function getExpense(expenseId: number) {
 
     var data = { expenseId: expenseId };
     const response = await axios.post(`${config.pathBase}/Expense/Get`, data, header);
-    let ex:Expense=response.data
-    ex.priceString=ex.price?.toString() || "0";
-    ex.deductionsString=ex.deductions?.toString() || "0";
-    ex.additionsString=ex.additions?.toString() || "0";
+    let ex: Expense = response.data
+    ex.priceString = ex.price?.toString() || "0";
+    ex.deductionsString = ex.deductions?.toString() || "0";
+    ex.additionsString = ex.additions?.toString() || "0";
     return response.data;
   } else {
     console.log("idtoken empty");
@@ -81,6 +81,12 @@ async function bagSave(bag: Bag, categories: Category[] | undefined) {
   return response.data;
 }
 
+async function removeCategoryFromBagCategory(bagCategoryIds: number[]) {
+  const response = await axios.post(`${config.pathBase}/Bag/RemoveCategoryFromBagCategory`, bagCategoryIds)
+  return response.data;
+}
+
+
 async function getCategories(selectedBag: number) {
   var data = { bagId: selectedBag };
   const response = await axios.post(`${config.pathBase}/Category/CagetoryList`, data);
@@ -102,6 +108,7 @@ async function saveExpense(expense: Expense) {
   return response.data;
 }
 
+
 export {
   echo,
   getExpenses,
@@ -110,6 +117,7 @@ export {
   bagsGet,
   bagGet,
   bagSave,
+  removeCategoryFromBagCategory,
   getCategories,
   getCategoriesAll,
   saveCategory,
