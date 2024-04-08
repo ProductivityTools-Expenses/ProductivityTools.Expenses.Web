@@ -24,8 +24,8 @@ export function ExpensesTable() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("fetchdataCategory",qCategoryId)
-      console.log("fetchdataCategory without type",searchParams.get("categoryId"))
+      console.log("fetchdataCategory", qCategoryId)
+      console.log("fetchdataCategory without type", searchParams.get("categoryId"))
       const data = await api.getExpenses(qBagId, qCategoryId);
       setExpenses(data);
     };
@@ -45,7 +45,7 @@ export function ExpensesTable() {
       if (qBagId != null) {
         const data = await api.getCategories(qBagId);
 
-        let emptyCategory:Category={categoryId:null, name:'All'}
+        let emptyCategory: Category = { categoryId: null, name: 'All' }
         data.unshift(emptyCategory);
 
         setCategories(data);
@@ -78,7 +78,7 @@ export function ExpensesTable() {
         value={qBagId?.toString()}
         onChange={(e) => {
           setSearchParams((params) => {
-            console.log("Oarams",params);
+            console.log("Oarams", params);
             params.delete('categoryId');
             params.set("bagId", JSON.parse(e.target.value));
             return params;
@@ -98,14 +98,20 @@ export function ExpensesTable() {
         value={qCategoryId?.toString()}
         onChange={(e) => {
           setSearchParams((params) => {
-            params.set("categoryId", JSON.parse(e.target.value));
+            console.log("category id selected value", e.target.value)
+            if (e.target.value == "") {
+              params.delete('categoryId');
+            }
+            else {
+              params.set("categoryId", JSON.parse(e.target.value));
+            }
             return params;
           });
           console.log("fdsaf");
         }}
       >
         {categories?.map((x: Category) => (
-          <option key={x.categoryId} value={x.categoryId || -1}>
+          <option key={x.categoryId} value={x.categoryId || ""}>
             {x.name}
           </option>
         ))}
