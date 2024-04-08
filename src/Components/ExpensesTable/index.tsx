@@ -20,16 +20,12 @@ export function ExpensesTable() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const qBagId = Number(searchParams.get("bagId"));
-  const qCategoryId = Number(searchParams.get("categoryId"));
+  const qCategoryId = searchParams.get("categoryId");
 
   useEffect(() => {
     const fetchData = async () => {
-      // if (qBagId != null) {
-      //   setSelectedBag(qBagId);
-      // }
-      // if (qCategoryId != null) {
-      //   setSelectedCategory(qCategoryId);
-      // }
+      console.log("fetchdataCategory",qCategoryId)
+      console.log("fetchdataCategory without type",searchParams.get("categoryId"))
       const data = await api.getExpenses(qBagId, qCategoryId);
       setExpenses(data);
     };
@@ -48,6 +44,10 @@ export function ExpensesTable() {
     const fetchData = async () => {
       if (qBagId != null) {
         const data = await api.getCategories(qBagId);
+
+        let emptyCategory:Category={categoryId:null, name:'All'}
+        data.unshift(emptyCategory);
+
         setCategories(data);
       }
     };
@@ -78,6 +78,8 @@ export function ExpensesTable() {
         value={qBagId?.toString()}
         onChange={(e) => {
           setSearchParams((params) => {
+            console.log("Oarams",params);
+            params.delete('categoryId');
             params.set("bagId", JSON.parse(e.target.value));
             return params;
           });

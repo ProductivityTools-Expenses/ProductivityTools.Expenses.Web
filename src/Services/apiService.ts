@@ -10,19 +10,19 @@ async function echo() {
   return response.data;
 }
 
-async function getExpenses(bagId: number | null, categoryId: number | null) {
-  console.log("apiservice,auth", auth);
-  console.log("apiservice,current user", auth.currentUser);
+async function getExpenses(bagId: number | null, categoryId: string | null) {
+ // console.log("apiservice,auth", auth);
+ // console.log("apiservice,current user", auth.currentUser);
   //  let idToken = await auth.currentUser?.getIdToken();
   let idToken = await auth.currentUser?.getIdToken();
   if (idToken == null) {
-    console.log("id token from auth empty, trying to get from localstorage");
+    //console.log("id token from auth empty, trying to get from localstorage");
     idToken = String(localStorage.getItem("token"));
   }
   //let
-  console.log("idToken:", idToken);
+  //console.log("idToken:", idToken);
 
-  console.log("apiservice, idToken:", idToken);
+  //console.log("apiservice, idToken:", idToken);
   if (idToken) {
     const header = {
       headers: { Authorization: `Bearer ${idToken}` },

@@ -31,8 +31,8 @@ export function AuthProvider({children}){
                 const token = await user.getIdToken();
                 
                 setUser(user);
-                localStorage.setItem("AuthContxt, token", token);
-                localStorage.setItem("AuthContxt, RefreshToken", user.refreshToken);
+                //localStorage.setItem("AuthContxt, token", token);
+                //localStorage.setItem("AuthContxt, RefreshToken", user.refreshToken);
                console.log("After getIdToken, onIdTokenChanged method invoked and token in the localstorage updated", token);
                 toast("New token saved in local storage")
             }
