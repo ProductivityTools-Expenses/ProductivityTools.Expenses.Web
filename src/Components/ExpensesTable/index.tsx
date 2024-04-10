@@ -23,11 +23,45 @@ export function ExpensesTable() {
   const qBagId = Number(searchParams.get("bagId"));
   const qCategoryId = searchParams.get("categoryId");
 
+  // const groupBy = (expenses: Expense[]) => {
+  //   var x = expenses.reduce((expense: Expense, x: expense[]) =>> {
+  //     (expense[x["bagId"]] = expense[x["bagId"]] || []).push(x);
+  //   return expense
+  // }
+  //}
+
+  var groupBy = function (xs: Expense[], key: string) {
+    return xs.reduce<Expense[]>((rv: Expense[], x: Expense) => {
+      return rv;
+    }, []);
+  };
+
+  var groupBy2 = function (xs: Expense[]) {
+    var x = xs.reduce<{ [key: string]: Expense[] }>((result, current) => ({
+
+      ...result,
+      [current?.categoryId ?? -1]: [...(result[current?.categoryId ?? -1] || []), current]
+
+    }), {})
+    console.log("reduce", x);
+    return x;
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       console.log("fetchdataCategory", qCategoryId)
       console.log("fetchdataCategory without type", searchParams.get("categoryId"))
       const data = await api.getExpenses(qBagId, qCategoryId);
+      var x = groupBy2(data)
+      // console.log("groups", x)
+      // console.log("data", data)
+      // let grouped = data.reduce(
+      //   (result: any, currentValue: any) => {
+      //     (result[currentValue['categoryId']] = result[currentValue['categoryId']] || []).push(currentValue);
+      //     return result;
+      //   }, {});
+      //console.log("grouped", grouped)
+
       setExpenses(data);
     };
     fetchData();
