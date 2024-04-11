@@ -9,10 +9,16 @@ import { Navigate } from "react-router-dom";
 import useQuery from "../../Tools/NavigationExtensions";
 import Table from './table'
 
+export default interface ExpenseGrouped {
+  [key: string]: Expense[]
+}
+
+
 export function ExpensesTable() {
   let query = useQuery();
   let navigate = useNavigate();
   const [expenses, setExpenses] = useState<Expense[]>();
+  const [expensesGrouped, setExpensesGrouped] = useState<ExpenseGrouped>();
   const [bags, setBags] = useState<Bag[]>();
   const [categories, setCategories] = useState<Category[]>();
   // const [selectedBag, setSelectedBag] = useState<number | null>(null);
@@ -40,7 +46,7 @@ export function ExpensesTable() {
     var x = xs.reduce<{ [key: string]: Expense[] }>((result, current) => ({
 
       ...result,
-      [current?.categoryId ?? -1]: [...(result[current?.categoryId ?? -1] || []), current]
+      [current?.category?.name?? -1]: [...(result[current?.category?.name ?? -1] || []), current]
 
     }), {})
     console.log("reduce", x);
@@ -50,10 +56,11 @@ export function ExpensesTable() {
   useEffect(() => {
     const fetchData = async () => {
       console.log("fetchdataCategory", qCategoryId)
-      console.log("fetchdataCategory without type", searchParams.get("categoryId"))
+      console.log("fetchdataCategory without tdype", searchParams.get("categoryId"))
       const data = await api.getExpenses(qBagId, qCategoryId);
       var x = groupBy2(data)
-      // console.log("groups", x)
+      setExpensesGrouped(x);
+      console.log("groups", x)
       // console.log("data", data)
       // let grouped = data.reduce(
       //   (result: any, currentValue: any) => {
@@ -63,6 +70,7 @@ export function ExpensesTable() {
       //console.log("grouped", grouped)
 
       setExpenses(data);
+      console.log("Expensegrouped", expensesGrouped);
     };
     fetchData();
   }, [qBagId, qCategoryId, forceRefreshCoutner]);
@@ -153,6 +161,11 @@ export function ExpensesTable() {
       </select>
       <br />
       ExpensesTable:
+       {expensesGrouped.map(x=>{
+        return(
+          <div>pawel</div>
+        )
+      })} 
       <Table expenses={expenses} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
 
     </div>
