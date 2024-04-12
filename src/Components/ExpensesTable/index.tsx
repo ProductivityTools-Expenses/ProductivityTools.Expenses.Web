@@ -18,7 +18,7 @@ export function ExpensesTable() {
   let query = useQuery();
   let navigate = useNavigate();
   const [expenses, setExpenses] = useState<Expense[]>();
-  const [expensesGrouped, setExpensesGrouped] = useState<ExpenseGrouped>();
+  const [expensesGrouped, setExpensesGrouped] = useState<ExpenseGrouped>({});
   const [bags, setBags] = useState<Bag[]>();
   const [categories, setCategories] = useState<Category[]>();
   // const [selectedBag, setSelectedBag] = useState<number | null>(null);
@@ -43,12 +43,14 @@ export function ExpensesTable() {
   };
 
   var groupBy2 = function (xs: Expense[]) {
-    var x = xs.reduce<{ [key: string]: Expense[] }>((result, current) => ({
+    var x: ExpenseGrouped = xs.reduce<{ [key: string]: Expense[] }>((result, current) => ({
 
       ...result,
-      [current?.category?.name?? -1]: [...(result[current?.category?.name ?? -1] || []), current]
+      [current?.category?.name ?? -1]: [...(result[current?.category?.name ?? -1] || []), current]
 
     }), {})
+    console.log(typeof (x))
+
     console.log("reduce", x);
     return x;
   }
@@ -59,6 +61,8 @@ export function ExpensesTable() {
       console.log("fetchdataCategory without tdype", searchParams.get("categoryId"))
       const data = await api.getExpenses(qBagId, qCategoryId);
       var x = groupBy2(data)
+
+
       setExpensesGrouped(x);
       console.log("groups", x)
       // console.log("data", data)
@@ -161,13 +165,16 @@ export function ExpensesTable() {
       </select>
       <br />
       ExpensesTable:
-       {expensesGrouped.map(x=>{
-        return(
-          <div>pawel</div>
-        )
-      })} 
-      <Table expenses={expenses} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
+      {
+        Object.keys(expensesGrouped).map(x => {
+          return (<div><span>{x}</span>
+                < Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
 
-    </div>
+          <span>{expensesGrouped[x].length}</span></div>)
+        })
+      }
+      < Table expenses={expenses} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
+
+    </div >
   );
 }
