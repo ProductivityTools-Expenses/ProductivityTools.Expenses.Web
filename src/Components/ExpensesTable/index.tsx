@@ -111,6 +111,12 @@ export function ExpensesTable() {
     navigate("/ExpenseEdit/" + expenseId);
   };
 
+  const sum = function (items: Expense[]) {
+    return items.reduce(function (a, b) {
+      return a + (b.cost ?? 0);
+    }, 0);
+  };
+
   return (
     <div>
       <div>query:{query.get("bagId")}</div>
@@ -164,13 +170,21 @@ export function ExpensesTable() {
         ))}
       </select>
       <br />
+      <span>summary:</span>
+      {Object.keys(expensesGrouped).map(x => {
+        return (<div>
+          <b><span>{x}: </span></b>
+          <span>{Math.round(sum(expensesGrouped[x]))}</span></div>)
+      })}
+      <hr></hr>
+
       ExpensesTable:
       {
         Object.keys(expensesGrouped).map(x => {
           return (<div><span>{x}</span>
-                < Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
+            < Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
 
-          <span>{expensesGrouped[x].length}</span></div>)
+            <span>{expensesGrouped[x].length}</span></div>)
         })
       }
       < Table expenses={expenses} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
