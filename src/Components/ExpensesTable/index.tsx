@@ -171,7 +171,7 @@ export function ExpensesTable() {
       </select>
       <br />
       <span>summary:</span>
-      <table>
+      <table className="summaryExpensesTable">
         <tr>
           <th>Category</th>
           <th>Cumulative cost</th>
@@ -191,7 +191,7 @@ export function ExpensesTable() {
       ExpensesTable:
       {
         Object.keys(expensesGrouped).map(x => {
-          return (<div><span>{x}</span>
+          return (<div><h3>Category: {x}</h3>
             <Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
           </div>)
         })

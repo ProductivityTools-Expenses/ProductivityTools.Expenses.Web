@@ -36,3 +36,54 @@
     transform: rotate(360deg);
   }
 }
+
+.summaryExpensesTable{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.expensetable{
+  margin-left: auto;
+  margin-right: auto;
+}
+.expensetable tr:nth-child(even) {background-color: #f2f2f2;}
+
+.expensetable .bag{
+  width: 100px;
+}
+
+.expensetable .categoryName{
+  width: 100px;
+}
+
+.expensetable .name{
+  width: 400px;
+}
+
+.expensetable .date{
+  width: 100px;
+}
+
+.expensetable .amount{
+  width: 10px;
+}
+
+.expensetable .price{
+  width: 50px;
+}
+
+.expensetable .value{
+  width: 50px;
+}
+
+.expensetable .additions{
+  width: 50px;
+}
+
+.expensetable .deductions{
+  width: 50px;
+}
+
+.expensetable .cost{
+  width: 100px;
+}
