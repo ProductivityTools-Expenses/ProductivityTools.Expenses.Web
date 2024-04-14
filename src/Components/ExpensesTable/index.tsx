@@ -171,24 +171,32 @@ export function ExpensesTable() {
       </select>
       <br />
       <span>summary:</span>
-      {Object.keys(expensesGrouped).map(x => {
-        return (<div>
-          <b><span>{x}: </span></b>
-          <span>{Math.round(sum(expensesGrouped[x]))}</span></div>)
-      })}
+      <table>
+        <tr>
+          <th>Category</th>
+          <th>Cumulative cost</th>
+        </tr>
+
+        {Object.keys(expensesGrouped).map(x => {
+          return (
+            <tr>
+              <td>{x}</td>
+              <td>{Math.round(sum(expensesGrouped[x]))}</td>
+            </tr>
+          )
+        })}
+      </table>
       <hr></hr>
 
       ExpensesTable:
       {
         Object.keys(expensesGrouped).map(x => {
           return (<div><span>{x}</span>
-            < Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
-
-            <span>{expensesGrouped[x].length}</span></div>)
+            <Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
+          </div>)
         })
       }
-      < Table expenses={expenses} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
-
+      {/* <Table expenses={expenses} deleteExpense={deleteExpense} editExpense={editExpense}></Table> */}
     </div >
   );
 }
