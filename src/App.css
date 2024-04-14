@@ -37,14 +37,16 @@
   }
 }
 
-.summaryExpensesTable{
+table{
   margin-left: auto;
   margin-right: auto;
 }
+.summaryExpensesTable{
+  
+}
 
 .expensetable{
-  margin-left: auto;
-  margin-right: auto;
+ 
 }
 .expensetable tr:nth-child(even) {background-color: #f2f2f2;}
 

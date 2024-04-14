@@ -6,23 +6,29 @@ export function Home() {
 
   return (
     <div>
+      <table>
+      <tr >
+          <td colSpan={8}><Echo></Echo></td>
+        </tr>
+        <tr>
+          <td><a href="\Expenses">Expenses</a></td>
+          <td><a href="\ExpenseAdd">Add Expense</a></td>
+          <td><a href="\CategoryEdit">Add Category</a></td>
+          <td><a href="\Login">Login</a></td>
+          <td><a href="\BagAdd">Add Bag</a></td>
+          <td><a href="\BagsTable">Bags Table</a></td>
+          <td><a href="\CategoriesTable">Categories Table</a></td>
+          <td><button onClick={logout}>logout</button></td>
+        </tr>
+       
+      </table>
       home
-      <ul>
-        <li><a href="\Expenses">Expenses</a></li>
-        <li><a href="\ExpenseAdd">Add Expense</a></li>
-        <li><a href="\CategoryEdit">Add Category</a></li>
-        <li><a href="\Login">Login</a></li>
-        <li><a href="\BagAdd">Add Bag</a></li>
-        <li><a href="\BagsTable">Bags Table</a></li>
-        <li><a href="\CategoriesTable">Categories Table</a></li>
-        <li><button onClick={logout}>logout</button></li>
-      </ul>
+  
+          
       
       
       
-      
-      
-      <Echo></Echo>
+      <ExpensesTable></ExpensesTable>
     </div>
   );
 }
