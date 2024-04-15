@@ -8,8 +8,7 @@ import { debug } from "console";
 
 export function ExpenseEdit() {
   let { expenseId } = useParams();
-  console.log("expenseid param");
-  console.log(expenseId);
+  console.log("expenseid param:",expenseId);
 
   let navigate = useNavigate();
   const [bags, setBags] = useState<Bag[]>();

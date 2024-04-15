@@ -27,7 +27,7 @@ function App() {
             <Route path="/BagAdd" element={<BagEdit />} />
             <Route path="/BagEdit/:bagId" element={<BagEdit />} />
             <Route path="/BagsTable" element={<BagsTable />} />
-            <Route path="/CategoryEdit" element={<CategoryEdit />} />
+            <Route path="/CategoryEdit/:categoryId" element={<CategoryEdit />} />
             <Route path="/CategoriesTable" element={<CategoriesTable />} />
 
           </Routes>
