@@ -95,7 +95,7 @@ async function getCategories(selectedBag: number) {
 
 async function getCategory(categoryId: number) {
   var data = { categoryId: categoryId };
-  const response = await axios.get(`${config.pathBase}/Category/Cagetory?categoryId=${categoryId}`);
+  const response = await axios.get(`${config.pathBase}/Category/Category?categoryId=${categoryId}`);
   return response.data;
 }
 

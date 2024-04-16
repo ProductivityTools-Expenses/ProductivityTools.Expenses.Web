@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 export function CategoryEdit() {
 
   let { categoryId } = useParams();
+  const  navigate  = useNavigate();
   console.log("categoryId param:", categoryId);
   const [category, setCategory] = useState<Category>({
     categoryId: null,
@@ -24,8 +25,9 @@ export function CategoryEdit() {
     }
   }, [categoryId])
 
-  const add = async () => {
+  const save = async () => {
     var r = await api.saveCategory(category);
+    navigate("/CategoriesTable")
   };
 
   const updateStringValue = (e: any) => {
@@ -34,11 +36,12 @@ export function CategoryEdit() {
 
   return (
     <div>
-      <a href="\home">home</a>
+      <a href="\Home">home</a>
+      <a href="\CategoriesTable">Category Table</a>
       <p>
-        Value<input name="name" type="text" onChange={updateStringValue}></input>
+        Value<input name="name" type="text" onChange={updateStringValue} value={category.name || ""}></input>
       </p>
-      <button onClick={add}>add</button>
+      <button onClick={save}>Save</button>
     </div>
   );
 }
