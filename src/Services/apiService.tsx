@@ -4,15 +4,63 @@ import { auth } from "../Session/firebase";
 import Expense from "../Objects/Expense";
 import Category from "../Objects/Category";
 import Bag from "../Objects/Bag";
+import { toast } from "react-toastify";
+import { debug } from "console";
+
 
 async function echo() {
   const response = await axios.get(`${config.pathBase}/Expense/echo?name=pawel`);
   return response.data;
 }
 
+
+
+async function invokeCallWithToast(call: any, pendingMessage: string, successMessage: string) {
+  return toast.promise(invokeCall(call), {
+    pending: pendingMessage ? pendingMessage : "Missing pending message",
+    success: successMessage ? successMessage : "Missing sucesss message",
+    error: {
+      render(data: any) {
+        console.log(data);
+        debugger;
+        return (
+          <p>
+            {data.message}[{data.response.data.message}]
+          </p>
+        );
+      },
+    },
+  });
+}
+
+async function invokeCall(call: any) {
+  let token = localStorage.getItem("token");
+  //console.log("token from localstorage", token)
+  const header = { headers: { Authorization: `Bearer ${token}` } };
+  try {
+    const response = call(header);
+    return response;
+  } catch (error) {
+    console.log("Call endpoint");
+    console.log(error);
+  }
+}
+
 async function getExpenses(bagId: number | null, categoryId: string | null) {
- // console.log("apiservice,auth", auth);
- // console.log("apiservice,current user", auth.currentUser);
+
+  const call = async (header: any) => {
+    var data = { BagId: bagId, CategoryId: categoryId };
+    const response = await axios.post(`${config.pathBase}/Expense/List`, data, header);
+    return response.data;
+  }
+  debugger;
+  var r=invokeCallWithToast(call,"Invoke call for expenses","Expenses returned");
+  return r;
+}
+
+async function getExpenses2(bagId: number | null, categoryId: string | null) {
+  // console.log("apiservice,auth", auth);
+  // console.log("apiservice,current user", auth.currentUser);
   //  let idToken = await auth.currentUser?.getIdToken();
   let idToken = await auth.currentUser?.getIdToken();
   if (idToken == null) {

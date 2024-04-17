@@ -12,6 +12,9 @@ import { CategoriesTable } from "./Components/CategoriesTable";
 import { BagEdit } from "./Components/BagEdit";
 import { BagsTable } from "./Components/BagsTable";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
     <div className="App">
@@ -33,6 +36,8 @@ function App() {
           </Routes>
         </AuthProvider>
       </BrowserRouter>
+      <ToastContainer />
+
     </div>
   );
 }
