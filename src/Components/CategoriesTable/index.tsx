@@ -25,6 +25,7 @@ export function CategoriesTable() {
   return (
     <div>
       <p>Categories table</p>
+      <a href="\Home">home</a>
       {categories?.map(x => {
         return (
           <div>
