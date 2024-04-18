@@ -5,9 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export function CategoryEdit() {
 
-  let { categoryId } = useParams();
-  const  navigate  = useNavigate();
-  console.log("categoryId param:", categoryId);
+  let { categoryId, backUrl, urlParam } = useParams();
+  const navigate = useNavigate();
+  console.log("categoryId param:", categoryId, "backUrl", backUrl);
   const [category, setCategory] = useState<Category>({
     categoryId: null,
     name: "",
@@ -27,7 +27,13 @@ export function CategoryEdit() {
 
   const save = async () => {
     var r = await api.saveCategory(category);
-    navigate("/CategoriesTable")
+    if (backUrl != null) {
+      console.log("BackUrl:", backUrl);
+      navigate("/" + backUrl + "/" + urlParam)
+    }
+    else {
+      navigate("/CategoriesTable")
+    }
   };
 
   const updateStringValue = (e: any) => {

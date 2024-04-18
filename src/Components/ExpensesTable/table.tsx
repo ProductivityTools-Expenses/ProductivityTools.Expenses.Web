@@ -25,8 +25,8 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
         <table className="expensetable">
             <thead>
                 <tr>
-                    <th>Bag</th>
-                    <th>Category</th>
+                    {/* <th>Bag</th>
+                    <th>Category</th> */}
                     <th>Name</th>
                     <th>Date</th>
                     <th>Amount</th>
@@ -44,8 +44,8 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
                     expenses.map((x: Expense) => {
                         return (
                             <tr key={x.expenseId}>
-                                <td className="bag">{x.bag?.name}</td>
-                                <td className="categoryName">{x.category?.name}</td>
+                                {/* <td className="bag">{x.bag?.name}</td>
+                                <td className="categoryName">{x.category?.name}</td> */}
                                 <td className="name">{x.name}</td>
                                 <td className="date">{toJSONLocal(x.date)}</td>
                                 <td className="amount">{x.amount}</td>
@@ -78,8 +78,8 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
                         );
                     })}
                 <tr>
-                    <td><b>Bag</b></td>
-                    <td><b>Category</b></td>
+                    {/* <td><b>Bag</b></td>
+                    <td><b>Category</b></td> */}
                     <td><b>Name</b></td>
                     <td><b>Date</b></td>
                     <td><b>Amount</b></td>

@@ -81,6 +81,11 @@ export function BagEdit() {
     setCategories(x => x?.filter(item => item.categoryId !== category.categoryId && item.name !== category.name))
   }
 
+  const editCategory = (categoryId: number | null) => {
+    console.log(categoryId);
+    navigate("/CategoryEdit/" + categoryId + "/BagEdit/" + bagId);
+  };
+
   return (
     <div>
       BagEdit page
@@ -101,6 +106,7 @@ export function BagEdit() {
           {categories?.map(category => (
             <div>{category.name}
               <button onClick={(x => removeCategoryFromTheBag(category))}>Remove</button>
+              <button onClick={(x => editCategory(category.categoryId))}>Edit</button>
             </div>
           ))}
 

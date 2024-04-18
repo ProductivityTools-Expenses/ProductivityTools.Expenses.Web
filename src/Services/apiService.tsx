@@ -5,7 +5,6 @@ import Expense from "../Objects/Expense";
 import Category from "../Objects/Category";
 import Bag from "../Objects/Bag";
 import { toast } from "react-toastify";
-import { debug } from "console";
 
 
 async function echo() {
@@ -22,7 +21,6 @@ async function invokeCallWithToast(call: any, pendingMessage: string, successMes
     error: {
       render(data: any) {
         console.log(data);
-        debugger;
         return (
           <p>
             {data.message}[{data.response.data.message}]
@@ -53,7 +51,6 @@ async function getExpenses(bagId: number | null, categoryId: string | null) {
     const response = await axios.post(`${config.pathBase}/Expense/List`, data, header);
     return response.data;
   }
-  debugger;
   var r=invokeCallWithToast(call,"Invoke call for expenses","Expenses returned");
   return r;
 }
