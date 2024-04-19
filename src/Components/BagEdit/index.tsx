@@ -88,7 +88,8 @@ export function BagEdit() {
 
   return (
     <div>
-      BagEdit page
+      BagEdit page 
+      <Link to="/Home">Home</Link>
       <p>
         Bag: id: {bag.bagId} name:{bag.name}, description:{bag.description}
       </p>

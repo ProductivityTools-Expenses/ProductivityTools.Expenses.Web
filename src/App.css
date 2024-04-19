@@ -89,3 +89,21 @@ table{
 .expensetable .cost{
   width: 100px;
 }
+
+.expenseTableBagLabel{
+  font-size: 25px;
+}
+
+.expenseTableBagValue{
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.expenseTableCategoryLabel{
+  font-size: 25px;
+}
+
+.expenseTableCategoryValue{
+  font-size: 25px;
+  font-weight: bold;
+}

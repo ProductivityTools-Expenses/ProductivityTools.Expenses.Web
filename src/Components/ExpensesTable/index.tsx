@@ -191,8 +191,11 @@ export function ExpensesTable() {
       ExpensesTable:
       {
         Object.keys(expensesGrouped).map(x => {
-          return (<div><h3>Bag: {expensesGrouped[x][0].bag?.name}, Category: {x}</h3>
-            <Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
+          return (<div><span className="expenseTableBagLabel">Bag: </span>
+           <span className="expenseTableBagValue">{expensesGrouped[x][0].bag?.name} </span> 
+            <span className="expenseTableCategoryLabel"> - Category: </span>  
+            <span className="expenseTableCategoryValue">{x} </span> 
+                        <Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
           </div>)
         })
       }

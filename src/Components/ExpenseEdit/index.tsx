@@ -83,7 +83,7 @@ export function ExpenseEdit() {
     getBags();
   }, []);
 
-  const add = async () => {
+  const save = async () => {
     var r = await api.saveExpense(expense);
     navigate("/Expenses?bagId=" + expense.bagId + "&categoryId=" + expense.categoryId);
   };
@@ -174,13 +174,13 @@ export function ExpenseEdit() {
       <p>
         Comment<input name="comment" type="text" value={expense.comment || ""} onChange={updateStringValue}></input>
       </p>
-      <button onClick={add}>add</button>
+      <button onClick={save}>Save</button>
       <button
         onClick={() => {
           navigate("/Expenses");
         }}
       >
-        cancel
+        Cancel
       </button>
     </div>
   );
