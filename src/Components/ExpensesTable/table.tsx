@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from "react";
 import Expense from "../../Objects/Expense";
 
 interface Props {
@@ -9,6 +10,20 @@ interface Props {
 
 export default function Table({ expenses, deleteExpense, editExpense }: Props) {
 
+    //const [expensesGrouped, setExpensesGrouped] = useState<ExpenseGrouped>({});
+
+    const [expensesSorted, setExpensesSorted] = useState<Expense[]>()
+
+    useEffect(() => {
+        if (expenses != undefined) {
+            const data = [...expenses]
+            console.log("data unsorted",data);
+            data?.sort((a, b) => a.cost ?? 0 > (b.cost ?? -1) ? -1 : 1)
+            console.log("data sorted",data);
+            setExpensesSorted(data);
+        }
+    }, [expenses])
+
     function toJSONLocal(date: string | null) {
         if (date == null) {
             return ""
@@ -18,6 +33,10 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
             local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
             return local.toJSON().slice(0, 10);
         }
+    }
+
+    const sortByCost = () => {
+
     }
 
 
@@ -34,14 +53,14 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
                     <th>Value</th>
                     <th>Additions</th>
                     <th>Deductions</th>
-                    <th>Cost</th>
+                    <th><button onClick={sortByCost}>Cost</button></th>
                     <th>Action</th>
                     {/* <th>Comment</th>             */}
                 </tr>
             </thead>
             <tbody>
-                {expenses &&
-                    expenses.map((x: Expense) => {
+                {expensesSorted &&
+                    expensesSorted.map((x: Expense) => {
                         return (
                             <tr key={x.expenseId}>
                                 {/* <td className="bag">{x.bag?.name}</td>
