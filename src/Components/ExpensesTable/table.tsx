@@ -7,22 +7,48 @@ interface Props {
     deleteExpense: (expenseId: number) => void,
     editExpense: (expenseId: number) => void,
 }
+interface ISortedQuery {
+    query: (a: Expense, b: Expense) => number;
+
+}
 
 export default function Table({ expenses, deleteExpense, editExpense }: Props) {
 
     //const [expensesGrouped, setExpensesGrouped] = useState<ExpenseGrouped>({});
 
     const [expensesSorted, setExpensesSorted] = useState<Expense[]>()
+    const [sortedQuery, setSortedQuery] = useState<ISortedQuery>();
+    const [ascending, setAscending] = useState<boolean>(true);
 
     useEffect(() => {
         if (expenses != undefined) {
             const data = [...expenses]
-            console.log("data unsorted",data);
-            data?.sort((a, b) => a.cost ?? 0 > (b.cost ?? -1) ? -1 : 1)
-            console.log("data sorted",data);
+            console.log("data unsorted", data);
+            console.log(sortedQuery)
+            if (sortedQuery != null) {
+                console.log("performing sorting")
+                data?.sort(sortedQuery.query);
+            }
+
+            //data?.sort((a, b) => a.cost ?? 0 - (b.cost ?? 0));
+
+
+
+            // data?.sort((a, b) => {
+            //     if (a.cost != null && b.cost != null) {
+            //         return a.cost - b.cost;
+            //         // return sortedQuery?.query(a, b);
+            //         //return -1;
+            //     }
+            //     else {
+            //         return 0;
+            //     }
+            // })
+
+            console.log("data sorted", data);
             setExpensesSorted(data);
         }
-    }, [expenses])
+    }, [expenses, sortedQuery, ascending])
 
     function toJSONLocal(date: string | null) {
         if (date == null) {
@@ -36,6 +62,22 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
     }
 
     const sortByCost = () => {
+        if (ascending) {
+            const query: ISortedQuery = {
+                query: (a: Expense, b: Expense) => (a?.cost ?? 0) - (b?.cost ?? 0)
+            }
+            setSortedQuery(query)
+            setAscending(false);
+            console.log("ascending");
+        }
+        else {
+            const query: ISortedQuery = {
+                query: (a: Expense, b: Expense) => (b?.cost ?? 0) - (a?.cost ?? 0)
+            }
+            setSortedQuery(query)
+            setAscending(true);
+            console.log("descending")
+        }
 
     }
 
