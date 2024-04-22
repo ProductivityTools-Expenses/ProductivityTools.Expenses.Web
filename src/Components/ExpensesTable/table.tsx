@@ -18,7 +18,8 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
 
     const [expensesSorted, setExpensesSorted] = useState<Expense[]>()
     const [sortedQuery, setSortedQuery] = useState<ISortedQuery>();
-    const [ascending, setAscending] = useState<boolean>(true);
+    const [costAscending, setCostAscending] = useState<boolean>(false);
+    const [nameAscending, setNameAscending] = useState<boolean>(false);
 
     useEffect(() => {
         if (expenses != undefined) {
@@ -48,7 +49,7 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
             console.log("data sorted", data);
             setExpensesSorted(data);
         }
-    }, [expenses, sortedQuery, ascending])
+    }, [expenses, sortedQuery, nameAscending, costAscending])
 
     function toJSONLocal(date: string | null) {
         if (date == null) {
@@ -62,12 +63,12 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
     }
 
     const sortByCost = () => {
-        if (ascending) {
+        if (costAscending) {
             const query: ISortedQuery = {
                 query: (a: Expense, b: Expense) => (a?.cost ?? 0) - (b?.cost ?? 0)
             }
             setSortedQuery(query)
-            setAscending(false);
+            setCostAscending(false);
             console.log("ascending");
         }
         else {
@@ -75,10 +76,28 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
                 query: (a: Expense, b: Expense) => (b?.cost ?? 0) - (a?.cost ?? 0)
             }
             setSortedQuery(query)
-            setAscending(true);
+            setCostAscending(true);
             console.log("descending")
         }
+    }
 
+    const sortByName = () => {
+        if (nameAscending) {
+            const query: ISortedQuery = {
+                query: (a: Expense, b: Expense) => (a?.name ?? 0) > (b?.name ?? 0) ? -1 : 1
+            }
+            setSortedQuery(query)
+            setNameAscending(false);
+            console.log("ascending");
+        }
+        else {
+            const query: ISortedQuery = {
+                query: (a: Expense, b: Expense) => (b?.name ?? 0) > (a?.name ?? 0) ? -1 : 1
+            }
+            setSortedQuery(query)
+            setNameAscending(true);
+            console.log("descending")
+        }
     }
 
 
@@ -88,7 +107,7 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
                 <tr>
                     {/* <th>Bag</th>
                     <th>Category</th> */}
-                    <th>Name</th>
+                    <th><button onClick={sortByName}>Name</button></th>
                     <th>Date</th>
                     <th>Amount</th>
                     <th>Price</th>
