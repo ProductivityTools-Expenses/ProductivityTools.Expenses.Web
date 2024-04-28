@@ -117,6 +117,11 @@ export function ExpensesTable() {
     }, 0);
   };
 
+  const navigateToAddExpense = (bagId: number | null | undefined, categoryId: number | null) => {
+    navigate("/ExpenseEdit/" + categoryId + "/BagEdit/" + bagId);
+
+  }
+
   return (
     <div>
       <div>query:{query.get("bagId")}</div>
@@ -192,10 +197,11 @@ export function ExpensesTable() {
       {
         Object.keys(expensesGrouped).map(x => {
           return (<div><span className="expenseTableBagLabel">Bag: </span>
-           <span className="expenseTableBagValue">{expensesGrouped[x][0].bag?.name} </span> 
-            <span className="expenseTableCategoryLabel"> - Category: </span>  
-            <span className="expenseTableCategoryValue">{x} </span> 
-                        <Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
+            <span className="expenseTableBagValue">{expensesGrouped[x][0].bag?.name} </span>
+            <span className="expenseTableCategoryLabel"> - Category: </span>
+            <span className="expenseTableCategoryValue">{x} </span>
+            <span><button onClick={() => navigateToAddExpense(expensesGrouped[x][0].bag?.bagId, expensesGrouped[x][0].categoryId)}> Add expense</button></span>
+            <Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
           </div>)
         })
       }

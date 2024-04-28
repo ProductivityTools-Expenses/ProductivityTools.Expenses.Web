@@ -30,7 +30,7 @@ function App() {
             <Route path="/BagAdd" element={<BagEdit />} />
             <Route path="/BagEdit/:bagId" element={<BagEdit />} />
             <Route path="/BagsTable" element={<BagsTable />} />
-            <Route path="/CategoryEdit/:categoryId/:backUrl?/:urlParam?" element={<CategoryEdit />} />
+            <Route path="/CategoryEdit/:categoryId?/:backUrl?/:urlParam?" element={<CategoryEdit />} />
             <Route path="/CategoriesTable" element={<CategoriesTable />} />
 
           </Routes>

@@ -133,7 +133,7 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
                                 <td className="value">{x.value}</td>
                                 <td className="additions">{x.additions}</td>
                                 <td className="deductions">{x.deductions}</td>
-                                <td className="cost">{x.cost}</td>
+                                <td className="cost">{x.cost?.toFixed(2)}</td>
                                 <td>
                                     <button
                                         onClick={(e) => {

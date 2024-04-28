@@ -18,7 +18,7 @@ export function BagEdit() {
   });
 
   const [categories, setCategories] = useState<BagCategoryEdit[]>()
-  const [allCategories, setAllCategories] = useState<Category[]>()
+  const [notAssignedCategories, setNotAssignedCategories] = useState<Category[]>()
   const [selectedNewCategoryId, setSelectedNewCategoryId] = useState<string>()
   const [bagCategoryIdsToRemove, setbagCategoryIdsToRemove] = useState<number[]>([])
 
@@ -47,8 +47,8 @@ export function BagEdit() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await api.getCategoriesAll()
-      setAllCategories(data);
+      const data = await api.getCategories(null)
+      setNotAssignedCategories(data);
 
     }
 
@@ -67,7 +67,7 @@ export function BagEdit() {
   //   };
 
   const addCategoryToBag = async () => {
-    let selectedCategory = allCategories?.find(x => x.categoryId == Number(selectedNewCategoryId));
+    let selectedCategory = notAssignedCategories?.find(x => x.categoryId == Number(selectedNewCategoryId));
     if (categories && selectedCategory) {
       setCategories([...categories, { categoryId: selectedCategory.categoryId, name: selectedCategory.name, bagCategoryId: null }])
     }
@@ -88,7 +88,7 @@ export function BagEdit() {
 
   return (
     <div>
-      BagEdit page 
+      BagEdit page
       <Link to="/Home">Home</Link>
       <p>
         Bag: id: {bag.bagId} name:{bag.name}, description:{bag.description}
@@ -124,7 +124,7 @@ export function BagEdit() {
           console.log("fdsaf");
         }}
       >
-        {allCategories?.map((x: Category) => (
+        {notAssignedCategories?.map((x: Category) => (
           <option key={x.categoryId} value={x.categoryId || -1}>
             {x.name}
           </option>

@@ -51,7 +51,7 @@ async function getExpenses(bagId: number | null, categoryId: string | null) {
     const response = await axios.post(`${config.pathBase}/Expense/List`, data, header);
     return response.data;
   }
-  var r=invokeCallWithToast(call,"Invoke call for expenses","Expenses returned");
+  var r = invokeCallWithToast(call, "Invoke call for expenses", "Expenses returned");
   return r;
 }
 
@@ -132,7 +132,7 @@ async function removeCategoryFromBagCategory(bagCategoryIds: number[]) {
 }
 
 
-async function getCategories(selectedBag: number) {
+async function getCategories(selectedBag: number | null) {
   var data = { bagId: selectedBag };
   const response = await axios.post(`${config.pathBase}/Category/CagetoryList`, data);
   return response.data;
