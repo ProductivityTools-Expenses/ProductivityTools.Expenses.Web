@@ -118,7 +118,7 @@ export function ExpensesTable() {
   };
 
   const navigateToAddExpense = (bagId: number | null | undefined, categoryId: number | null) => {
-    navigate("/ExpenseEdit/" + categoryId + "/BagEdit/" + bagId);
+    navigate("/ExpenseAdd?bagId=" + bagId + "&categoryId=" + categoryId);
 
   }
 

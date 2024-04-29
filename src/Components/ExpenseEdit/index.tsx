@@ -3,12 +3,14 @@ import * as api from "../../Services/apiService";
 import Bag from "../../Objects/Bag";
 import Category from "../../Objects/Category";
 import Expense from "../../Objects/Expense";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { debug } from "console";
 
 export function ExpenseEdit() {
   let { expenseId } = useParams();
-  console.log("expenseid param:",expenseId);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  console.log("expenseid param:", expenseId);
 
   let navigate = useNavigate();
   const [bags, setBags] = useState<Bag[]>();
@@ -66,6 +68,11 @@ export function ExpenseEdit() {
         if (expense.expenseId == null && expenseId == null) {
           setExpense({ ...expense, categoryId: data[0].categoryId } as Expense);
         }
+
+        const categoryId: number = Number(searchParams.get('categoryId'));
+        if (categoryId != undefined) {
+          setExpense({ ...expense, categoryId: categoryId } as Expense);
+        }
       }
     };
     getCategories();
@@ -76,6 +83,11 @@ export function ExpenseEdit() {
       const data = await api.bagsGet();
       if (expense.expenseId == null && expenseId == null) {
         setExpense({ ...expense, bagId: data[0].bagId } as Expense);
+      }
+      const bagId: number = Number(searchParams.get('bagId'));
+      if (bagId != undefined) {
+        setExpense({ ...expense, bagId: bagId } as Expense);
+
       }
       setBags(data);
     };
