@@ -159,6 +159,12 @@ async function saveExpense(expense: Expense) {
   return response.data;
 }
 
+async function getTags(expenseIds: number[]) {
+  const response = await axios.post(`${config.pathBase}/Tags/GetTags`, expenseIds);
+  return response.data;
+
+}
+
 
 export {
   echo,
@@ -174,4 +180,6 @@ export {
   getCategoriesAll,
   saveCategory,
   saveExpense,
+
+  getTags
 };

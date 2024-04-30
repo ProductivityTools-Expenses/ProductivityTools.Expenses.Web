@@ -1,6 +1,8 @@
 
 import { useEffect, useState } from "react";
 import Expense from "../../Objects/Expense";
+import * as api from "../../Services/apiService";
+
 
 interface Props {
     expenses: Expense[] | undefined,
@@ -20,6 +22,15 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
     const [sortedQuery, setSortedQuery] = useState<ISortedQuery>();
     const [costAscending, setCostAscending] = useState<boolean>(false);
     const [nameAscending, setNameAscending] = useState<boolean>(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const expensesIds = expenses?.map(x => x.expenseId);
+            if (expensesIds != undefined && expensesIds != null) {
+                const data = await api.getTags(expensesIds);
+            }
+        }
+    }, [expenses])
 
     useEffect(() => {
         if (expenses != undefined) {
