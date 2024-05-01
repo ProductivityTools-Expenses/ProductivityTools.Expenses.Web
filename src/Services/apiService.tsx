@@ -160,7 +160,7 @@ async function saveExpense(expense: Expense) {
 }
 
 async function getTags(expenseIds: number[]) {
-  const response = await axios.post(`${config.pathBase}/Tags/GetTags`, expenseIds);
+  const response = await axios.post(`${config.pathBase}/Tag/GetTags`, expenseIds);
   return response.data;
 
 }

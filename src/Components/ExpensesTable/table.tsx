@@ -27,9 +27,11 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
         const fetchData = async () => {
             const expensesIds = expenses?.map(x => x.expenseId);
             if (expensesIds != undefined && expensesIds != null) {
-                const data = await api.getTags(expensesIds);
+                var eids: number[] = expensesIds.filter(n => n) as number[];
+                const data = await api.getTags(eids);
             }
         }
+        fetchData();
     }, [expenses])
 
     useEffect(() => {
