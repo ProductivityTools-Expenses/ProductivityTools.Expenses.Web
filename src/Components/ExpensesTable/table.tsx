@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import Expense from "../../Objects/Expense";
+import ExpenseTag from "../../Objects/ExpenseTag";
 import * as api from "../../Services/apiService";
 
 
@@ -23,12 +24,15 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
     const [costAscending, setCostAscending] = useState<boolean>(false);
     const [nameAscending, setNameAscending] = useState<boolean>(false);
 
+    const [expenseTags,setExpenseTags]=useState<ExpenseTag[]>();
+
     useEffect(() => {
         const fetchData = async () => {
             const expensesIds = expenses?.map(x => x.expenseId);
             if (expensesIds != undefined && expensesIds != null) {
                 var eids: number[] = expensesIds.filter(n => n) as number[];
                 const data = await api.getTags(eids);
+                setExpenseTags(data);
             }
         }
         fetchData();
