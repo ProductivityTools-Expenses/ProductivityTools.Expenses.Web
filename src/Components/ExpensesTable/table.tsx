@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Expense from "../../Objects/Expense";
 import ExpenseTag from "../../Objects/ExpenseTag";
 import * as api from "../../Services/apiService";
+import { arrayBuffer } from "stream/consumers";
 
 
 interface Props {
@@ -24,7 +25,7 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
     const [costAscending, setCostAscending] = useState<boolean>(false);
     const [nameAscending, setNameAscending] = useState<boolean>(false);
 
-    const [expenseTags,setExpenseTags]=useState<ExpenseTag[]>();
+    const [expenseTags, setExpenseTags] = useState<ExpenseTag[]>();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,6 +38,38 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
         }
         fetchData();
     }, [expenses])
+
+    useEffect(() => {
+
+        const findTags = (expenseid: number | null): ExpenseTag[] | null => {
+            if (expenseid) {
+                var tags = expenseTags?.filter(obj => {
+                    return obj.expenseId == expenseid;
+                })
+                if (tags) { return tags; }
+            }
+            return null;
+        }
+        const assignTags = () => {
+            if (expenseTags && expenseTags.length) {
+                let copyofExpenses = [...expensesSorted as Expense[]]
+                for (var i = 0; i < copyofExpenses?.length; i++) {
+                    //if (copyofExpenses[i].tags == null) {
+                        copyofExpenses[i].tags = new Array();
+                    //}
+                    var tags: ExpenseTag[] | null = findTags(copyofExpenses[i].expenseId);
+                    if (tags) {
+                        for (var j = 0; j < tags.length; j++) {
+                            copyofExpenses[i].tags?.push(tags[j].tag);
+                        }
+                    }
+                }
+                debugger;
+                setExpensesSorted(copyofExpenses);
+            }
+        }
+        assignTags();
+    }, [expenseTags])
 
     useEffect(() => {
         if (expenses != undefined) {
@@ -143,7 +176,7 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
                             <tr key={x.expenseId}>
                                 {/* <td className="bag">{x.bag?.name}</td>
                                 <td className="categoryName">{x.category?.name}</td> */}
-                                <td className="name">{x.name}</td>
+                                <td className="name">{x.name} {x.tags?.map(x => <span>x:{x.name}</span>)}</td>
                                 <td className="date">{toJSONLocal(x.date)}</td>
                                 <td className="amount">{x.amount}</td>
                                 <td className="price">{x.price}</td>

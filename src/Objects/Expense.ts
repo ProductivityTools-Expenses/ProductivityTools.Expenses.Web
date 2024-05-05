@@ -1,5 +1,6 @@
 import Bag from "./Bag";
 import Category from "./Category";
+import Tag from "./Tag";
 
 export default interface Expense {
   expenseId: number | null;
@@ -20,4 +21,6 @@ export default interface Expense {
   bag: Bag | null;
   categoryId: number | null;
   category: Category | null;
+
+  tags: Tag[] | null 
 }

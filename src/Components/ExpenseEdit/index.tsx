@@ -34,6 +34,7 @@ export function ExpenseEdit() {
     additionsString: "0",
     cost: null,
     comment: null,
+    tags: null
   });
 
   function formatISODate(date: Date | null): string {
