@@ -4,6 +4,7 @@ import Expense from "../../Objects/Expense";
 import ExpenseTag from "../../Objects/ExpenseTag";
 import * as api from "../../Services/apiService";
 import { arrayBuffer } from "stream/consumers";
+import { useNavigate } from "react-router-dom";
 
 
 interface Props {
@@ -18,6 +19,7 @@ interface ISortedQuery {
 
 export default function Table({ expenses, deleteExpense, editExpense }: Props) {
 
+    const navigate=useNavigate();
     //const [expensesGrouped, setExpensesGrouped] = useState<ExpenseGrouped>({});
 
     const [expensesSorted, setExpensesSorted] = useState<Expense[]>()
@@ -55,7 +57,7 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
                 let copyofExpenses = [...expensesSorted as Expense[]]
                 for (var i = 0; i < copyofExpenses?.length; i++) {
                     //if (copyofExpenses[i].tags == null) {
-                        copyofExpenses[i].tags = new Array();
+                    copyofExpenses[i].tags = new Array();
                     //}
                     var tags: ExpenseTag[] | null = findTags(copyofExpenses[i].expenseId);
                     if (tags) {
@@ -64,7 +66,6 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
                         }
                     }
                 }
-                debugger;
                 setExpensesSorted(copyofExpenses);
             }
         }
@@ -150,6 +151,10 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
         }
     }
 
+    const navigateToTags=()=>{
+        console.log("Navigate");
+        navigate("/TagExpensesTable");
+    }
 
     return (
         <table className="expensetable">
@@ -176,7 +181,7 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
                             <tr key={x.expenseId}>
                                 {/* <td className="bag">{x.bag?.name}</td>
                                 <td className="categoryName">{x.category?.name}</td> */}
-                                <td className="name">{x.name} {x.tags?.map(x => <span>x:{x.name}</span>)}</td>
+                                <td className="name">{x.name} <br />{x.tags?.map(x => <span> <button onClick={navigateToTags}> {x.name}</button></span>)}</td>
                                 <td className="date">{toJSONLocal(x.date)}</td>
                                 <td className="amount">{x.amount}</td>
                                 <td className="price">{x.price}</td>

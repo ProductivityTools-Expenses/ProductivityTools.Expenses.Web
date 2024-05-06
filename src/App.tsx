@@ -11,6 +11,7 @@ import { CategoryEdit } from "./Components/CategoryEdit";
 import { CategoriesTable } from "./Components/CategoriesTable";
 import { BagEdit } from "./Components/BagEdit";
 import { BagsTable } from "./Components/BagsTable";
+import {TagExpensesTable} from "./Components/TagExpensesTable"
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,6 +33,7 @@ function App() {
             <Route path="/BagsTable" element={<BagsTable />} />
             <Route path="/CategoryEdit/:categoryId?/:backUrl?/:urlParam?" element={<CategoryEdit />} />
             <Route path="/CategoriesTable" element={<CategoriesTable />} />
+            <Route path="/TagExpensesTable" element={<TagExpensesTable />} />
 
           </Routes>
         </AuthProvider>
