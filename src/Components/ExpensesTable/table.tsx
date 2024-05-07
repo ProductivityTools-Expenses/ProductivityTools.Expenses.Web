@@ -19,7 +19,7 @@ interface ISortedQuery {
 
 export default function Table({ expenses, deleteExpense, editExpense }: Props) {
 
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     //const [expensesGrouped, setExpensesGrouped] = useState<ExpenseGrouped>({});
 
     const [expensesSorted, setExpensesSorted] = useState<Expense[]>()
@@ -151,9 +151,9 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
         }
     }
 
-    const navigateToTags=()=>{
+    const navigateToTags = (tagId: number | null) => {
         console.log("Navigate");
-        navigate("/TagExpensesTable");
+        navigate("/TagExpensesTable?tagId=" + tagId);
     }
 
     return (
@@ -181,7 +181,7 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
                             <tr key={x.expenseId}>
                                 {/* <td className="bag">{x.bag?.name}</td>
                                 <td className="categoryName">{x.category?.name}</td> */}
-                                <td className="name">{x.name} <br />{x.tags?.map(x => <span> <button onClick={navigateToTags}> {x.name}</button></span>)}</td>
+                                <td className="name">{x.name} <br />{x.tags?.map(x => <span> <button onClick={() => navigateToTags(x.tagId)}> {x.name}</button></span>)}</td>
                                 <td className="date">{toJSONLocal(x.date)}</td>
                                 <td className="amount">{x.amount}</td>
                                 <td className="price">{x.price}</td>
