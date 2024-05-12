@@ -15,7 +15,7 @@ export function TagExpensesTable() {
 
     useEffect(() => {
         const fetchData = async () => {
-            var r = await api.getTagsSummary(2);
+            var r = await api.getTagsSummary(tagId);
             setTagsSummary(r);
         }
         fetchData();

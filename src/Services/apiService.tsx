@@ -165,7 +165,7 @@ async function getTags(expenseIds: number[]) {
 }
 
 async function getTagsSummary(tagId: number) {
-  const response = await axios.post(`${config.pathBase}/Tag/getTagsSummary`, tagId);
+  const response = await axios.get(`${config.pathBase}/Tag/GetTagsSummary?tagId=${tagId}`);
   return response.data;
 
 }
