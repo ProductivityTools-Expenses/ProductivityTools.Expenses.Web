@@ -167,6 +167,11 @@ async function getTags(expenseIds: number[]) {
 async function getTagsSummary(tagId: number) {
   const response = await axios.get(`${config.pathBase}/Tag/GetTagsSummary?tagId=${tagId}`);
   return response.data;
+}
+
+async function getTagGroup(tagId: number) {
+  const response = await axios.get(`${config.pathBase}/Tag/GetTagGroup?tagId=${tagId}`);
+  return response.data;
 
 }
 
@@ -187,5 +192,6 @@ export {
   saveExpense,
 
   getTags,
-  getTagsSummary
+  getTagsSummary,
+  getTagGroup
 };

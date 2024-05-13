@@ -10,6 +10,7 @@ export function TagExpensesTable() {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [tagsSummary, setTagsSummary] = useState<TagsSummary[]>([]);
+    const [tagGroupName, setTagGroupName] = useState<string>();
 
     const tagId: number = Number(searchParams.get('tagId'));
 
@@ -20,9 +21,22 @@ export function TagExpensesTable() {
         }
         fetchData();
     }, [tagId])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            var r = await api.getTagGroup(tagId);
+            console.log("SetTagGroupName", r)
+            setTagGroupName(r.name);
+        }
+        fetchData();
+    }, [tagId])
+
+
+
     return (
         <div>
-            <span>{tagId}</span>
+            <span>Tag Id: {tagId}</span><br />
+            <span>Tag group name : {tagGroupName}</span>
             <table>
                 <tr>
                     <th>
