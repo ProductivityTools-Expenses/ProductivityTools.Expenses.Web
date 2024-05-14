@@ -17,6 +17,7 @@ export function TagExpensesTable() {
     useEffect(() => {
         const fetchData = async () => {
             var r = await api.getTagsSummary(tagId);
+            r.sort((a: TagsSummary, b: TagsSummary) => b.valueSum - a.valueSum);
             setTagsSummary(r);
         }
         fetchData();
@@ -47,14 +48,14 @@ export function TagExpensesTable() {
                     </th>
                 </tr>
                 {tagsSummary.map(x =>
-                    <tr>
+                    <tr key={x.tagName} >
                         <td>{x.tagName}</td>
-                        <td>{x.valueSum}</td>
+                        <td>{x.valueSum.toLocaleString().replace(","," ")}</td>
                     </tr>
                 )}
 
             </table>
             home
-        </div>
+        </div >
     );
 }
