@@ -55,6 +55,16 @@ async function getExpenses(bagId: number | null, categoryId: string | null) {
   return r;
 }
 
+async function getExpensesByTag(tagId: number) {
+
+  const call = async (header: any) => {
+    const response = await axios.get(`${config.pathBase}/Expense/GetExpensesByTag?tagId=` + tagId, header);
+    return response.data;
+  }
+  var r = invokeCallWithToast(call, "Invoke call for expenses", "Expenses returned");
+  return r;
+}
+
 async function getExpenses2(bagId: number | null, categoryId: string | null) {
   // console.log("apiservice,auth", auth);
   // console.log("apiservice,current user", auth.currentUser);
@@ -172,13 +182,13 @@ async function getTagsSummary(tagId: number) {
 async function getTagGroup(tagId: number) {
   const response = await axios.get(`${config.pathBase}/Tag/GetTagGroup?tagId=${tagId}`);
   return response.data;
-
 }
 
 
 export {
   echo,
   getExpenses,
+  getExpensesByTag,
   getExpense,
   deleteExpense,
   bagsGet,
@@ -194,4 +204,5 @@ export {
   getTags,
   getTagsSummary,
   getTagGroup
+
 };

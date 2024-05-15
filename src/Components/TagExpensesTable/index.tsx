@@ -33,6 +33,9 @@ export function TagExpensesTable() {
     }, [tagId])
 
 
+    const loadExpenses = () => {
+        api.getExpensesByTag(1);
+    }
 
     return (
         <div>
@@ -50,12 +53,14 @@ export function TagExpensesTable() {
                 {tagsSummary.map(x =>
                     <tr key={x.tagName} >
                         <td>{x.tagName}</td>
-                        <td>{x.valueSum.toLocaleString().replace(","," ")}</td>
+                        <td align="right"><button onClick={loadExpenses}>{x.valueSum.toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(",", " ")}</button></td>
                     </tr>
                 )}
 
             </table>
-            home
+            ExpensesDeails:
+            {/* <Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table> */}
+
         </div >
     );
 }
