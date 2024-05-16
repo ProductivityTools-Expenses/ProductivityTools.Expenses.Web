@@ -9,15 +9,16 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
     expenses: Expense[] | undefined,
-    deleteExpense: (expenseId: number) => void,
-    editExpense: (expenseId: number) => void,
+    // deleteExpense: (expenseId: number) => void,
+    //editExpense: (expenseId: number) => void,
+    refreshCallback: () => void ;
 }
 interface ISortedQuery {
     query: (a: Expense, b: Expense) => number;
 
 }
 
-export default function Table({ expenses, deleteExpense, editExpense }: Props) {
+export default function Table({ expenses, refreshCallback }: Props) {
 
     const navigate = useNavigate();
     //const [expensesGrouped, setExpensesGrouped] = useState<ExpenseGrouped>({});
@@ -112,6 +113,17 @@ export default function Table({ expenses, deleteExpense, editExpense }: Props) {
             return local.toJSON().slice(0, 10);
         }
     }
+
+    const deleteExpense = (expenseId: number) => {
+        console.log(expenseId);
+        api.deleteExpense(expenseId);
+        refreshCallback();
+    };
+
+    const editExpense = (expenseId: number) => {
+        console.log(expenseId);
+        navigate("/ExpenseEdit/" + expenseId);
+    };
 
     const sortByCost = () => {
         if (costAscending) {

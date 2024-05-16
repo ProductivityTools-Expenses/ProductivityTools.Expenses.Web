@@ -101,15 +101,12 @@ export function ExpensesTable() {
     fetchData();
   }, [qBagId]);
 
-  const deleteExpense = (expenseId: number) => {
-    console.log(expenseId);
-    api.deleteExpense(expenseId);
+
+
+
+  const refreshCallback = () => {
     setForceRefreshCounter(forceRefreshCoutner + 1);
-  };
-  const editExpense = (expenseId: number) => {
-    console.log(expenseId);
-    navigate("/ExpenseEdit/" + expenseId);
-  };
+  }
 
   const sum = function (items: Expense[]) {
     return items.reduce(function (a, b) {
@@ -201,7 +198,7 @@ export function ExpensesTable() {
             <span className="expenseTableCategoryLabel"> - Category: </span>
             <span className="expenseTableCategoryValue">{x} </span>
             <span><button onClick={() => navigateToAddExpense(expensesGrouped[x][0].bag?.bagId, expensesGrouped[x][0].categoryId)}> Add expense</button></span>
-            <Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table>
+            <Table expenses={expensesGrouped[x]} refreshCallback={refreshCallback}></Table>
           </div>)
         })
       }

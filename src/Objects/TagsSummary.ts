@@ -1,5 +1,6 @@
 
 export default interface TagsSummary {
-    tagName: string;
-    valueSum: number;
-  }
+  tagId: number;
+  tagName: string;
+  valueSum: number;
+}

@@ -5,12 +5,15 @@ import { useSearchParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import * as api from '../../Services/apiService'
 import TagsSummary from '../../Objects/TagsSummary'
+import Expense from "../../Objects/Expense";
+import Table from "../ExpensesTable/table";
 
 export function TagExpensesTable() {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [tagsSummary, setTagsSummary] = useState<TagsSummary[]>([]);
     const [tagGroupName, setTagGroupName] = useState<string>();
+    const [expenses, setExpenses] = useState<Expense[]>()
 
     const tagId: number = Number(searchParams.get('tagId'));
 
@@ -28,13 +31,15 @@ export function TagExpensesTable() {
             var r = await api.getTagGroup(tagId);
             console.log("SetTagGroupName", r)
             setTagGroupName(r.name);
+
         }
         fetchData();
     }, [tagId])
 
 
-    const loadExpenses = () => {
-        api.getExpensesByTag(1);
+    const loadExpenses = async (tagId: number) => {
+        var r = await api.getExpensesByTag(tagId);
+        setExpenses(r);
     }
 
     return (
@@ -53,13 +58,13 @@ export function TagExpensesTable() {
                 {tagsSummary.map(x =>
                     <tr key={x.tagName} >
                         <td>{x.tagName}</td>
-                        <td align="right"><button onClick={loadExpenses}>{x.valueSum.toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(",", " ")}</button></td>
+                        <td align="right"><button onClick={() => loadExpenses(x.tagId)}>{x.valueSum.toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(",", " ")}</button></td>
                     </tr>
                 )}
 
             </table>
             ExpensesDeails:
-            {/* <Table expenses={expensesGrouped[x]} deleteExpense={deleteExpense} editExpense={editExpense}></Table> */}
+            <Table expenses={expenses} refreshCallback={() => { }}></Table>
 
         </div >
     );
