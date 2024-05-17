@@ -11,14 +11,15 @@ interface Props {
     expenses: Expense[] | undefined,
     // deleteExpense: (expenseId: number) => void,
     //editExpense: (expenseId: number) => void,
-    refreshCallback: () => void ;
+    showTags: boolean,
+    refreshCallback: () => void;
 }
 interface ISortedQuery {
     query: (a: Expense, b: Expense) => number;
 
 }
 
-export default function Table({ expenses, refreshCallback }: Props) {
+export default function Table({ expenses, showTags, refreshCallback }: Props) {
 
     const navigate = useNavigate();
     //const [expensesGrouped, setExpensesGrouped] = useState<ExpenseGrouped>({});
@@ -193,7 +194,7 @@ export default function Table({ expenses, refreshCallback }: Props) {
                             <tr key={x.expenseId}>
                                 {/* <td className="bag">{x.bag?.name}</td>
                                 <td className="categoryName">{x.category?.name}</td> */}
-                                <td className="name">{x.name} <br />{x.tags?.map(x => <span> <button onClick={() => navigateToTags(x.tagId)}> {x.name}</button></span>)}</td>
+                                <td className="name">{x.name} <br />{x.tags?.map(x => <span>  {showTags && <button onClick={() => navigateToTags(x.tagId)}> {x.name}</button>} </span>)}</td>
                                 <td className="date">{toJSONLocal(x.date)}</td>
                                 <td className="amount">{x.amount}</td>
                                 <td className="price">{x.price}</td>
@@ -231,7 +232,12 @@ export default function Table({ expenses, refreshCallback }: Props) {
                     <td><b>Date</b></td>
                     <td><b>Amount</b></td>
                     <td><b>Price</b></td>
-                    <td><b>Value</b></td>
+                    <td><b> {" "}
+                        {expenses
+                            ?.reduce((accumualtor: number, object: Expense) => {
+                                return accumualtor + object!.value!;
+                            }, 0)
+                            .toFixed(2)}</b></td>
                     <td><b>Additions</b></td>
                     <td><b>Deductions</b></td>
                     <td><b>
@@ -244,6 +250,6 @@ export default function Table({ expenses, refreshCallback }: Props) {
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table >
     );
 }

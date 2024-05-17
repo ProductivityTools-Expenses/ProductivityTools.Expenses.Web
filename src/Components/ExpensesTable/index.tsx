@@ -198,7 +198,7 @@ export function ExpensesTable() {
             <span className="expenseTableCategoryLabel"> - Category: </span>
             <span className="expenseTableCategoryValue">{x} </span>
             <span><button onClick={() => navigateToAddExpense(expensesGrouped[x][0].bag?.bagId, expensesGrouped[x][0].categoryId)}> Add expense</button></span>
-            <Table expenses={expensesGrouped[x]} refreshCallback={refreshCallback}></Table>
+            <Table expenses={expensesGrouped[x]} showTags={true} refreshCallback={refreshCallback}></Table>
           </div>)
         })
       }

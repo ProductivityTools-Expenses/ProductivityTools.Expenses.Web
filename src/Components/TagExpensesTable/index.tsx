@@ -1,7 +1,7 @@
 import { ExpensesTable } from "../ExpensesTable";
 import { Echo } from "../Echo";
 import { logout } from "../../Session/firebase";
-import { useSearchParams } from "react-router-dom"
+import { useSearchParams, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react";
 import * as api from '../../Services/apiService'
 import TagsSummary from '../../Objects/TagsSummary'
@@ -9,6 +9,9 @@ import Expense from "../../Objects/Expense";
 import Table from "../ExpensesTable/table";
 
 export function TagExpensesTable() {
+
+    let navigate = useNavigate();
+
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [tagsSummary, setTagsSummary] = useState<TagsSummary[]>([]);
@@ -46,6 +49,7 @@ export function TagExpensesTable() {
         <div>
             <span>Tag Id: {tagId}</span><br />
             <span>Tag group name : {tagGroupName}</span>
+            <button onClick={() => navigate(-1)}>Back</button>
             <table>
                 <tr>
                     <th>
@@ -61,10 +65,20 @@ export function TagExpensesTable() {
                         <td align="right"><button onClick={() => loadExpenses(x.tagId)}>{x.valueSum.toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(",", " ")}</button></td>
                     </tr>
                 )}
+                <tr>
+                    <td>sum</td>
+                    <td>
+                        <b>{tagsSummary
+                            ?.reduce((accumualtor: number, object: TagsSummary) => {
+                                return accumualtor + object!.valueSum!;
+                            }, 0)
+                            .toFixed(2)}</b>
+                    </td>
+                </tr>
 
             </table>
             ExpensesDeails:
-            <Table expenses={expenses} refreshCallback={() => { }}></Table>
+            <Table expenses={expenses} showTags={false} refreshCallback={() => { }}></Table>
 
         </div >
     );
