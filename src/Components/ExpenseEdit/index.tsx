@@ -3,6 +3,7 @@ import * as api from "../../Services/apiService";
 import Bag from "../../Objects/Bag";
 import Category from "../../Objects/Category";
 import Expense from "../../Objects/Expense";
+import ExpenseTag from "../../Objects/ExpenseTag";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { debug } from "console";
 
@@ -15,6 +16,8 @@ export function ExpenseEdit() {
   let navigate = useNavigate();
   const [bags, setBags] = useState<Bag[]>();
   const [categories, setCategories] = useState<Category[]>();
+  const [tags, setTags] = useState<ExpenseTag[]>();
+
   console.log("UseState");
   const [expense, setExpense] = useState<Expense>({
     expenseId: null,
@@ -95,6 +98,15 @@ export function ExpenseEdit() {
 
     getBags();
   }, []);
+
+  useEffect(() => {
+    const getTags = async () => {
+      const data = await api.getTags([Number(expenseId)])
+      setTags(data);
+      console.log("Tags", data);
+    }
+    getTags();
+  }, [])
 
   const save = async () => {
     var r = await api.saveExpense(expense);
@@ -187,6 +199,9 @@ export function ExpenseEdit() {
       <p>
         Comment<input name="comment" type="text" value={expense.comment || ""} onChange={updateStringValue}></input>
       </p>
+      <span>Tags: {tags && tags.map(x => {
+        return (<span>{x.tag.name} |</span>)
+      })}</span>
       <button onClick={save}>Save</button>
       <button
         onClick={() => {
