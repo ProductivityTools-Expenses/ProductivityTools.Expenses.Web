@@ -4,6 +4,7 @@ import { auth } from "../Session/firebase";
 import Expense from "../Objects/Expense";
 import Category from "../Objects/Category";
 import Bag from "../Objects/Bag";
+import ExpenseTag from "../Objects/ExpenseTag";
 import { toast } from "react-toastify";
 
 
@@ -184,6 +185,11 @@ async function getTagGroup(tagId: number) {
   return response.data;
 }
 
+async function saveTags(expenseTags: ExpenseTag[]) {
+  const response = await axios.post(`${config.pathBase}/Tag/Save`, expenseTags);
+  return response.data;
+}
+
 
 export {
   echo,
@@ -203,6 +209,7 @@ export {
 
   getTags,
   getTagsSummary,
-  getTagGroup
+  getTagGroup,
+  saveTags
 
 };

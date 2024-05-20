@@ -16,7 +16,7 @@ export function ExpenseEdit() {
   let navigate = useNavigate();
   const [bags, setBags] = useState<Bag[]>();
   const [categories, setCategories] = useState<Category[]>();
-  const [tags, setTags] = useState<ExpenseTag[]>();
+  const [tags, setTags] = useState<ExpenseTag[]>([]);
 
   console.log("UseState");
   const [expense, setExpense] = useState<Expense>({
@@ -127,6 +127,14 @@ export function ExpenseEdit() {
     setExpense({ ...expense, [name]: valueFloat, [stringName]: valueString } as Expense);
   };
 
+  const removeTag = (expenseTagId: number | null) => {
+    if (expenseTagId) {
+      let newTags: ExpenseTag[] = [...tags]
+      newTags = newTags.filter(x => x.expenseTagId != expenseTagId);
+      setTags(newTags);
+    }
+  }
+
   return (
     <div>
       <p>
@@ -200,8 +208,9 @@ export function ExpenseEdit() {
         Comment<input name="comment" type="text" value={expense.comment || ""} onChange={updateStringValue}></input>
       </p>
       <span>Tags: {tags && tags.map(x => {
-        return (<span>{x.tag.name} |</span>)
+        return (<span>{x.tag.name} <button onClick={() => removeTag(x.expenseTagId)}>delete</button> |</span>)
       })}</span>
+     <hr></hr>
       <button onClick={save}>Save</button>
       <button
         onClick={() => {
