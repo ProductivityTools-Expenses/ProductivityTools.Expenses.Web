@@ -18,12 +18,11 @@ export function ExpenseEdit() {
   const [categories, setCategories] = useState<Category[]>();
   const [tags, setTags] = useState<ExpenseTag[]>([]);
 
-  console.log("UseState");
   const [expense, setExpense] = useState<Expense>({
     expenseId: null,
     name: "xx",
     date: formatISODate(new Date()),
-    bagId: null,
+    bagId: -99,
     bag: null,
     categoryId: null,
     category: null,
@@ -65,6 +64,8 @@ export function ExpenseEdit() {
   }, [expenseId]);
 
   useEffect(() => {
+    console.log("useEffect getCategories bagId:", expense.bagId)
+    console.log("useEffect getCategories categoryId:", expense.categoryId)
     const getCategories = async () => {
       if (expense.bagId != null) {
         const data = await api.getCategories(expense.bagId);
@@ -83,14 +84,22 @@ export function ExpenseEdit() {
   }, [expense.bagId]);
 
   useEffect(() => {
+
     const getBags = async () => {
       const data = await api.bagsGet();
       if (expense.expenseId == null && expenseId == null) {
-        setExpense({ ...expense, bagId: data[0].bagId } as Expense);
+        console.log("expense.expenseId == null && expenseId == null", data[0].bagId)
+        //setExpense({ ...expense, bagId: data[0].bagId } as Expense);
+        setExpense({ ...expense, bagId: 5 } as Expense);
       }
-      const bagId: number = Number(searchParams.get('bagId'));
-      if (bagId != undefined) {
-        setExpense({ ...expense, bagId: bagId } as Expense);
+      console.log("SearchParams", searchParams.get('bagId'))
+      if (searchParams.get('bagId') != undefined) {
+        const bagId: number = Number(searchParams.get('bagId'));
+
+        //this should no be called for edit
+        console.log("bagId != undefined", bagId)
+        //setExpense({ ...expense, bagId: bagId } as Expense);
+        setExpense({ ...expense, bagId: 4 } as Expense);
 
       }
       setBags(data);
@@ -110,6 +119,7 @@ export function ExpenseEdit() {
 
   const save = async () => {
     var r = await api.saveExpense(expense);
+    var r2 = await api.saveTags(tags);
     navigate("/Expenses?bagId=" + expense.bagId + "&categoryId=" + expense.categoryId);
   };
 
@@ -210,7 +220,7 @@ export function ExpenseEdit() {
       <span>Tags: {tags && tags.map(x => {
         return (<span>{x.tag.name} <button onClick={() => removeTag(x.expenseTagId)}>delete</button> |</span>)
       })}</span>
-     <hr></hr>
+      <hr></hr>
       <button onClick={save}>Save</button>
       <button
         onClick={() => {
