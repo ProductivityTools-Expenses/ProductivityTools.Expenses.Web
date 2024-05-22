@@ -22,7 +22,7 @@ export function ExpenseEdit() {
     expenseId: null,
     name: "xx",
     date: formatISODate(new Date()),
-    bagId: -99,
+    bagId: null,
     bag: null,
     categoryId: null,
     category: null,
@@ -86,11 +86,12 @@ export function ExpenseEdit() {
   useEffect(() => {
 
     const getBags = async () => {
+      console.log("getBags")
       const data = await api.bagsGet();
       if (expense.expenseId == null && expenseId == null) {
         console.log("expense.expenseId == null && expenseId == null", data[0].bagId)
-        //setExpense({ ...expense, bagId: data[0].bagId } as Expense);
-        setExpense({ ...expense, bagId: 5 } as Expense);
+        setExpense({ ...expense, bagId: data[0].bagId } as Expense);
+        //setExpense({ ...expense, bagId: 5 } as Expense);
       }
       console.log("SearchParams", searchParams.get('bagId'))
       if (searchParams.get('bagId') != undefined) {
@@ -98,8 +99,8 @@ export function ExpenseEdit() {
 
         //this should no be called for edit
         console.log("bagId != undefined", bagId)
-        //setExpense({ ...expense, bagId: bagId } as Expense);
-        setExpense({ ...expense, bagId: 4 } as Expense);
+        setExpense({ ...expense, bagId: bagId } as Expense);
+        //setExpense({ ...expense, bagId: 4 } as Expense);
 
       }
       setBags(data);

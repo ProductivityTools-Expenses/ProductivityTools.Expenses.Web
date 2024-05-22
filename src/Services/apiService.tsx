@@ -105,7 +105,7 @@ async function getExpense(expenseId: number) {
     };
 
     var data = { expenseId: expenseId };
-    const response = await axios.post(`${config.pathBase}/Expense/Get`, data, header);
+    const response = await axios.post(`${config.pathBase}/Expense/ExpenseGet`, data, header);
     let ex: Expense = response.data
     ex.priceString = ex.price?.toString() || "0";
     ex.deductionsString = ex.deductions?.toString() || "0";
@@ -171,7 +171,7 @@ async function saveExpense(expense: Expense) {
 }
 
 async function getTags(expenseIds: number[]) {
-  const response = await axios.post(`${config.pathBase}/Tag/GetTags`, expenseIds);
+  const response = await axios.post(`${config.pathBase}/Tag/TagList`, expenseIds);
   return response.data;
 }
 
