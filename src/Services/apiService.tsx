@@ -190,6 +190,11 @@ async function saveTags(expenseTags: ExpenseTag[]) {
   return response.data;
 }
 
+async function removeTagFromExpense(expenseTagId: number) {
+  const response = await axios.post(`${config.pathBase}/Tag/RemoveTagFromExpense`, { expenseTagId: expenseTagId })
+  return response.data
+}
+
 
 export {
   echo,
@@ -210,6 +215,7 @@ export {
   getTags,
   getTagsSummary,
   getTagGroup,
-  saveTags
+  saveTags,
+  removeTagFromExpense
 
 };

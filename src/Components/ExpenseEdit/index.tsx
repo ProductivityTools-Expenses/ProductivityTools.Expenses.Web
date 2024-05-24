@@ -140,6 +140,7 @@ export function ExpenseEdit() {
 
   const removeTag = (expenseTagId: number | null) => {
     if (expenseTagId) {
+      var result=api.removeTagFromExpense(expenseTagId);
       let newTags: ExpenseTag[] = [...tags]
       newTags = newTags.filter(x => x.expenseTagId != expenseTagId);
       setTags(newTags);
