@@ -191,7 +191,7 @@ async function saveTags(expenseTags: ExpenseTag[]) {
 }
 
 async function removeTagFromExpense(expenseTagId: number) {
-  const response = await axios.post(`${config.pathBase}/Tag/RemoveTagFromExpense`, { expenseTagId: expenseTagId })
+  const response = await axios.post(`${config.pathBase}/Tag/RemoveTagFromExpense?expenseTagId=${expenseTagId}`)
   return response.data
 }
 
