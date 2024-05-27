@@ -175,8 +175,13 @@ async function getTags(expenseIds: number[]) {
   return response.data;
 }
 
+async function getTagsByTagGroupId(tagGroupId: number) {
+  const response=await axios.post(`${config.pathBase}/Tag/GetTagsByTagGroupId?tagGroupId=${tagGroupId}`);
+  return response.data;
+}
+
 async function getTagsSummary(tagId: number) {
-  const response = await axios.get(`${config.pathBase}/Tag/GetTagsSummary?tagId=${tagId}`);
+  const response = await axios.post(`${config.pathBase}/Tag/GetTagsSummary?tagId=${tagId}`);
   return response.data;
 }
 
@@ -192,6 +197,11 @@ async function saveTags(expenseTags: ExpenseTag[]) {
 
 async function removeTagFromExpense(expenseTagId: number) {
   const response = await axios.post(`${config.pathBase}/Tag/RemoveTagFromExpense?expenseTagId=${expenseTagId}`)
+  return response.data
+}
+
+async function getTagGroupForCategory(categoryId: number) {
+  const response = await axios.post(`${config.pathBase}/Tag/getTagGroupForCategory?categoryId=${categoryId}`)
   return response.data
 }
 
@@ -213,9 +223,11 @@ export {
   saveExpense,
 
   getTags,
+  getTagsByTagGroupId,
   getTagsSummary,
   getTagGroup,
   saveTags,
-  removeTagFromExpense
+  removeTagFromExpense,
+  getTagGroupForCategory
 
 };

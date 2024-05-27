@@ -6,6 +6,8 @@ import Expense from "../../Objects/Expense";
 import ExpenseTag from "../../Objects/ExpenseTag";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { debug } from "console";
+import TagGroup from "../../Objects/TagGroup";
+import Tag from "../../Objects/Tag";
 
 export function ExpenseEdit() {
   let { expenseId } = useParams();
@@ -17,6 +19,9 @@ export function ExpenseEdit() {
   const [bags, setBags] = useState<Bag[]>();
   const [categories, setCategories] = useState<Category[]>();
   const [tags, setTags] = useState<ExpenseTag[]>([]);
+  const [tagGroups, setTagGroups] = useState<TagGroup[]>([])//for adding new
+  const [selectedTagGroup, setSelectedTagGroup] = useState<number>(-1);
+  const [allTags, setAllags] = useState<Tag[]>([])
 
   const [expense, setExpense] = useState<Expense>({
     expenseId: null,
@@ -118,6 +123,25 @@ export function ExpenseEdit() {
     getTags();
   }, [])
 
+  useEffect(() => {
+    const getTagGroup = async () => {
+      if (expense.categoryId) {
+        const data = await api.getTagGroupForCategory(expense.categoryId)
+        setTagGroups(data);
+        console.log("tagGroup", data);
+      }
+    }
+    getTagGroup();
+  }, [expense.categoryId])
+
+  useEffect(() => {
+    const getTags = async () => {
+      var data = await api.getTagsByTagGroupId(selectedTagGroup);
+      setAllags(data);
+    }
+    getTags();
+  }, [selectedTagGroup])
+
   const save = async () => {
     var r = await api.saveExpense(expense);
     var r2 = await api.saveTags(tags);
@@ -140,7 +164,7 @@ export function ExpenseEdit() {
 
   const removeTag = (expenseTagId: number | null) => {
     if (expenseTagId) {
-      var result=api.removeTagFromExpense(expenseTagId);
+      var result = api.removeTagFromExpense(expenseTagId);
       let newTags: ExpenseTag[] = [...tags]
       newTags = newTags.filter(x => x.expenseTagId != expenseTagId);
       setTags(newTags);
@@ -231,6 +255,17 @@ export function ExpenseEdit() {
       >
         Cancel
       </button>
+
+      <span>categories groups:{tagGroups.map(x => <span>{x.name}</span>)}
+        <select onChange={(event) => setSelectedTagGroup(Number(event.target.value))}>
+          {tagGroups.map(x => <option onChange={() => setSelectedTagGroup(x.tagGroupId)} value={x.tagGroupId}>{x.name}</option>)}
+        </select>
+        <span>{selectedTagGroup}</span>
+        <span>{allTags.map(x => <span>{x.name}</span>)}</span>
+        <select>
+          {allTags.map(x => <option >{x.name}</option>)}
+        </select></span>
+
     </div>
   );
 }
