@@ -176,7 +176,17 @@ export function ExpenseEdit() {
 
 
   const addTagToExpense = () => {
-    console.log(selectedNewTag)
+    console.log("selectedNewTag" ,selectedNewTag)
+    console.log("tags", tags)
+    if (expense.expenseId && selectedNewTag) {
+      let newTag: ExpenseTag = {
+        expenseId: expense.expenseId,
+        expenseTagId: null,
+        tag: selectedNewTag,
+      }
+      let newTags: ExpenseTag[] = [...tags, newTag]
+      setTags(newTags);
+    }
   }
 
   return (
@@ -252,7 +262,7 @@ export function ExpenseEdit() {
         Comment<input name="comment" type="text" value={expense.comment || ""} onChange={updateStringValue}></input>
       </p>
       <span>Tags: {tags && tags.map(x => {
-        return (<span>{x.tag.name} <button onClick={() => removeTag(x.expenseTagId)}>delete</button> |</span>)
+        return (<span>{x.tag.name} <button onClick={() => removeTag(x.expenseTagId)}>Remove</button> |</span>)
       })}</span>
       <hr></hr>
       <button onClick={save}>Save</button>
