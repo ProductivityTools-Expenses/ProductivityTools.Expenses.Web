@@ -129,6 +129,7 @@ export function ExpenseEdit() {
         const data = await api.getTagGroupForCategory(expense.categoryId)
         setTagGroups(data);
         console.log("tagGroup", data);
+        setSelectedTagGroup(data[0].tagGroupId);
       }
     }
     getTagGroup();
@@ -255,13 +256,12 @@ export function ExpenseEdit() {
       >
         Cancel
       </button>
-
-      <span>categories groups:{tagGroups.map(x => <span>{x.name}</span>)}
+<hr></hr>
+      <span>categories groups:
         <select onChange={(event) => setSelectedTagGroup(Number(event.target.value))}>
           {tagGroups.map(x => <option onChange={() => setSelectedTagGroup(x.tagGroupId)} value={x.tagGroupId}>{x.name}</option>)}
         </select>
-        <span>{selectedTagGroup}</span>
-        <span>{allTags.map(x => <span>{x.name}</span>)}</span>
+        <span>selectedagGroup={selectedTagGroup}</span>
         <select>
           {allTags.map(x => <option >{x.name}</option>)}
         </select></span>
