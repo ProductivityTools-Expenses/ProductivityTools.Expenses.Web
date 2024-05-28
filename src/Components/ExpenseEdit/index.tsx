@@ -22,6 +22,7 @@ export function ExpenseEdit() {
   const [tagGroups, setTagGroups] = useState<TagGroup[]>([])//for adding new
   const [selectedTagGroup, setSelectedTagGroup] = useState<number>(-1);
   const [allTags, setAllags] = useState<Tag[]>([])
+  const [selectedNewTag, setSelectedNewTag] = useState<Tag>();
 
   const [expense, setExpense] = useState<Expense>({
     expenseId: null,
@@ -172,6 +173,12 @@ export function ExpenseEdit() {
     }
   }
 
+
+
+  const addTagToExpense = () => {
+    console.log(selectedNewTag)
+  }
+
   return (
     <div>
       <p>
@@ -256,15 +263,16 @@ export function ExpenseEdit() {
       >
         Cancel
       </button>
-<hr></hr>
+      <hr></hr>
       <span>categories groups:
         <select onChange={(event) => setSelectedTagGroup(Number(event.target.value))}>
           {tagGroups.map(x => <option onChange={() => setSelectedTagGroup(x.tagGroupId)} value={x.tagGroupId}>{x.name}</option>)}
         </select>
         <span>selectedagGroup={selectedTagGroup}</span>
-        <select>
-          {allTags.map(x => <option >{x.name}</option>)}
+        <select onChange={(event) => setSelectedNewTag(allTags[Number(event.target.value)])}>
+          {allTags.map((option, index) => <option key={index} value={index} >{option.name}</option>)}
         </select></span>
+      <button onClick={addTagToExpense}>Add tag</button>
 
     </div>
   );
