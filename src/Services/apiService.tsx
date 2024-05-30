@@ -176,7 +176,7 @@ async function getTags(expenseIds: number[]) {
 }
 
 async function getTagsByTagGroupId(tagGroupId: number) {
-  const response=await axios.post(`${config.pathBase}/Tag/GetTagsByTagGroupId?tagGroupId=${tagGroupId}`);
+  const response = await axios.post(`${config.pathBase}/Tag/GetTagsByTagGroupId?tagGroupId=${tagGroupId}`);
   return response.data;
 }
 
@@ -190,8 +190,8 @@ async function getTagGroup(tagId: number) {
   return response.data;
 }
 
-async function saveTags(expenseTags: ExpenseTag[]) {
-  const response = await axios.post(`${config.pathBase}/Tag/Save`, expenseTags);
+async function saveTags(expense: Expense, expenseTags: ExpenseTag[]) {
+  const response = await axios.post(`${config.pathBase}/Tag/SaveTags`, { expense: expense, expenseTags: expenseTags });
   return response.data;
 }
 

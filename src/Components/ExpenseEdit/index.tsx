@@ -13,7 +13,7 @@ export function ExpenseEdit() {
   let { expenseId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  console.log("expenseid param:", expenseId);
+  //console.log("expenseid param:", expenseId);
 
   let navigate = useNavigate();
   const [bags, setBags] = useState<Bag[]>();
@@ -24,26 +24,7 @@ export function ExpenseEdit() {
   const [allTags, setAllags] = useState<Tag[]>([])
   const [selectedNewTag, setSelectedNewTag] = useState<Tag>();
 
-  const [expense, setExpense] = useState<Expense>({
-    expenseId: null,
-    name: "xx",
-    date: formatISODate(new Date()),
-    bagId: null,
-    bag: null,
-    categoryId: null,
-    category: null,
-    amount: 0,
-    price: 0,
-    priceString: "0",
-    value: null,
-    deductions: 0,
-    deductionsString: "0",
-    additions: 0,
-    additionsString: "0",
-    cost: null,
-    comment: null,
-    tags: null
-  });
+  const [expense, setExpense] = useState<Expense | null>(null);
 
   function formatISODate(date: Date | null): string {
     if (date == null) {
@@ -70,31 +51,33 @@ export function ExpenseEdit() {
   }, [expenseId]);
 
   useEffect(() => {
-    console.log("useEffect getCategories bagId:", expense.bagId)
-    console.log("useEffect getCategories categoryId:", expense.categoryId)
+    console.log("useEffect getCategories bagId:", expense?.bagId)
+    console.log("useEffect getCategories categoryId:", expense?.categoryId)
     const getCategories = async () => {
-      if (expense.bagId != null) {
+      if (expense?.bagId != null) {
         const data = await api.getCategories(expense.bagId);
         setCategories(data);
-        if (expense.expenseId == null && expenseId == null) {
+        if (expense.expenseId == null && expenseId == null && data) {
+          console.log("set category id as ", data[0].categoryId)
           setExpense({ ...expense, categoryId: data[0].categoryId } as Expense);
         }
 
         const categoryId: number = Number(searchParams.get('categoryId'));
         if (categoryId != undefined) {
+          console.log("set category id2 as ", data[0].categoryId)
           setExpense({ ...expense, categoryId: categoryId } as Expense);
         }
       }
     };
     getCategories();
-  }, [expense.bagId]);
+  }, [expense?.bagId]);
 
   useEffect(() => {
 
     const getBags = async () => {
       console.log("getBags")
       const data = await api.bagsGet();
-      if (expense.expenseId == null && expenseId == null) {
+      if (expense?.expenseId == null && expenseId == null) {
         console.log("expense.expenseId == null && expenseId == null", data[0].bagId)
         setExpense({ ...expense, bagId: data[0].bagId } as Expense);
         //setExpense({ ...expense, bagId: 5 } as Expense);
@@ -126,15 +109,15 @@ export function ExpenseEdit() {
 
   useEffect(() => {
     const getTagGroup = async () => {
-      if (expense.categoryId) {
-        const data = await api.getTagGroupForCategory(expense.categoryId)
+      if (expense?.categoryId) {
+        const data = await api.getTagGroupForCategory(expense?.categoryId)
         setTagGroups(data);
         console.log("tagGroup", data);
         setSelectedTagGroup(data[0].tagGroupId);
       }
     }
     getTagGroup();
-  }, [expense.categoryId])
+  }, [expense?.categoryId])
 
   useEffect(() => {
     const getTags = async () => {
@@ -145,9 +128,12 @@ export function ExpenseEdit() {
   }, [selectedTagGroup])
 
   const save = async () => {
-    var r = await api.saveExpense(expense);
-    var r2 = await api.saveTags(tags);
-    navigate("/Expenses?bagId=" + expense.bagId + "&categoryId=" + expense.categoryId);
+    console.log("Save expense", expense)
+    if (expense) {
+      var r = await api.saveExpense(expense);
+      var r2 = await api.saveTags(expense, tags);
+    }
+    navigate("/Expenses?bagId=" + expense?.bagId + "&categoryId=" + expense?.categoryId);
   };
 
   const updateStringValue = (e: any) => {
@@ -176,13 +162,14 @@ export function ExpenseEdit() {
 
 
   const addTagToExpense = () => {
-    console.log("selectedNewTag" ,selectedNewTag)
+    console.log("selectedNewTag", selectedNewTag)
     console.log("tags", tags)
-    if (expense.expenseId && selectedNewTag) {
+    if (expense?.expenseId && selectedNewTag) {
       let newTag: ExpenseTag = {
         expenseId: expense.expenseId,
         expenseTagId: null,
         tag: selectedNewTag,
+        tagId: selectedNewTag!.tagId!
       }
       let newTags: ExpenseTag[] = [...tags, newTag]
       setTags(newTags);
@@ -198,11 +185,11 @@ export function ExpenseEdit() {
       </p>
       <p>
         Name
-        <input type="text" name="name" value={expense.name || ""} onChange={updateStringValue}></input>
+        <input type="text" name="name" value={expense?.name || ""} onChange={updateStringValue}></input>
       </p>
       <p>
         Bag
-        <select name="bagId" value={expense.bagId || -1} onChange={updateNumberValue}>
+        <select name="bagId" value={expense?.bagId || -1} onChange={updateNumberValue}>
           {bags?.map((oneBag) => {
             return (
               <option key={oneBag.bagId} value={oneBag.bagId!}>
@@ -214,7 +201,7 @@ export function ExpenseEdit() {
       </p>
       <p>
         Category
-        <select name="categoryId" value={expense.categoryId || -1} onChange={updateNumberValue}>
+        <select name="categoryId" value={expense?.categoryId || -1} onChange={updateNumberValue}>
           {categories?.map((category) => {
             return (
               <option key={category.categoryId} value={category.categoryId || -1}>
@@ -228,11 +215,11 @@ export function ExpenseEdit() {
         Date<input name="date" type="text" value={expense?.date || ""} onChange={updateStringValue}></input>
       </p>
       <p>
-        Amount<input name="amountString" type="text" value={expense.amount || 0} onChange={updateNumberValue}></input>
+        Amount<input name="amountString" type="text" value={expense?.amount || 0} onChange={updateNumberValue}></input>
       </p>
       <p>
         Price
-        <input name="priceString" type="text" value={expense.priceString || ""} onChange={updateNumberValue}></input>
+        <input name="priceString" type="text" value={expense?.priceString || ""} onChange={updateNumberValue}></input>
       </p>
       <p>
         Value<input type="text" disabled={true}></input>
@@ -242,7 +229,7 @@ export function ExpenseEdit() {
         <input
           name="deductionsString"
           type="text"
-          value={expense.deductionsString || ""}
+          value={expense?.deductionsString || ""}
           onChange={updateNumberValue}
         ></input>
       </p>
@@ -251,7 +238,7 @@ export function ExpenseEdit() {
         <input
           name="additionsString"
           type="text"
-          value={expense.additionsString || ""}
+          value={expense?.additionsString || ""}
           onChange={updateNumberValue}
         ></input>
       </p>
@@ -259,7 +246,7 @@ export function ExpenseEdit() {
         Cost<input type="text" disabled={true}></input>
       </p>
       <p>
-        Comment<input name="comment" type="text" value={expense.comment || ""} onChange={updateStringValue}></input>
+        Comment<input name="comment" type="text" value={expense?.comment || ""} onChange={updateStringValue}></input>
       </p>
       <span>Tags: {tags && tags.map(x => {
         return (<span>{x.tag.name} <button onClick={() => removeTag(x.expenseTagId)}>Remove</button> |</span>)

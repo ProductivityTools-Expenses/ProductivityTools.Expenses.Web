@@ -4,4 +4,5 @@ export default interface ExpenseTag {
   expenseTagId: number | null;
   expenseId: number;
   tag: Tag;
+  tagId: number;
 }
