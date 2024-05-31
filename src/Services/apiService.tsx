@@ -191,7 +191,13 @@ async function getTagGroup(tagId: number) {
 }
 
 async function saveTags(expense: Expense, expenseTags: ExpenseTag[]) {
-  const response = await axios.post(`${config.pathBase}/Tag/SaveTags`, { expense: expense, expenseTags: expenseTags });
+
+  let tempExpenseTags = [...expenseTags]
+  for (var i = 0; i < tempExpenseTags.length; i++) {
+    tempExpenseTags[i].tag=null; 
+  }
+
+  const response = await axios.post(`${config.pathBase}/Tag/SaveTags`, { expense: expense, expenseTags: tempExpenseTags });
   return response.data;
 }
 

@@ -63,7 +63,7 @@ export function ExpenseEdit() {
         }
 
         const categoryId: number = Number(searchParams.get('categoryId'));
-        if (categoryId != undefined) {
+        if (expense.categoryId == null && searchParams.get('categoryId') != undefined) {
           console.log("set category id2 as ", data[0].categoryId)
           setExpense({ ...expense, categoryId: categoryId } as Expense);
         }
@@ -147,6 +147,7 @@ export function ExpenseEdit() {
 
     let stringName: string = e.target.name;
     let name: string = stringName.replace("String", "");
+    console.log("Updading", stringName)
     setExpense({ ...expense, [name]: valueFloat, [stringName]: valueString } as Expense);
   };
 
@@ -249,7 +250,7 @@ export function ExpenseEdit() {
         Comment<input name="comment" type="text" value={expense?.comment || ""} onChange={updateStringValue}></input>
       </p>
       <span>Tags: {tags && tags.map(x => {
-        return (<span>{x.tag.name} <button onClick={() => removeTag(x.expenseTagId)}>Remove</button> |</span>)
+        return (<span>{x?.tag?.name} <button onClick={() => removeTag(x.expenseTagId)}>Remove</button> |</span>)
       })}</span>
       <hr></hr>
       <button onClick={save}>Save</button>

@@ -64,7 +64,9 @@ export default function Table({ expenses, showTags, refreshCallback }: Props) {
                     var tags: ExpenseTag[] | null = findTags(copyofExpenses[i].expenseId);
                     if (tags) {
                         for (var j = 0; j < tags.length; j++) {
-                            copyofExpenses[i].tags?.push(tags[j].tag);
+                            if (tags[j].tag && tags[j].tag != null) {
+                                copyofExpenses[i].tags?.push(tags[j].tag!);
+                            }
                         }
                     }
                 }
