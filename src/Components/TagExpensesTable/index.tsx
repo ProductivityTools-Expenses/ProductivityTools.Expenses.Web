@@ -63,6 +63,7 @@ export function TagExpensesTable() {
                     <tr key={x.tagName} >
                         <td>{x.tagName}</td>
                         <td align="right"><button onClick={() => loadExpenses(x.tagId)}>{x.valueSum.toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(",", " ")}</button></td>
+                        <td align="right"><button onClick={() => loadExpenses(x.tagId)}>{x.costSum.toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(",", " ")}</button></td>
                     </tr>
                 )}
                 <tr>
@@ -71,6 +72,13 @@ export function TagExpensesTable() {
                         <b>{tagsSummary
                             ?.reduce((accumualtor: number, object: TagsSummary) => {
                                 return accumualtor + object!.valueSum!;
+                            }, 0)
+                            .toFixed(2)}</b>
+                    </td>
+                    <td>
+                        <b>{tagsSummary
+                            ?.reduce((accumualtor: number, object: TagsSummary) => {
+                                return accumualtor + object!.costSum!;
                             }, 0)
                             .toFixed(2)}</b>
                     </td>

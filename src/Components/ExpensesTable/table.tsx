@@ -196,7 +196,7 @@ export default function Table({ expenses, showTags, refreshCallback }: Props) {
                             <tr key={x.expenseId}>
                                 {/* <td className="bag">{x.bag?.name}</td>
                                 <td className="categoryName">{x.category?.name}</td> */}
-                                <td className="name">{x.name} <br />{x.tags?.map(x => <span>  {showTags && <button onClick={() => navigateToTags(x.tagId)}> {x.name}</button>} </span>)}</td>
+                                <td className="name">{x.name} <br />{x.tags?.map(x => <span>  {showTags && <button className='linkButton' onClick={() => navigateToTags(x.tagId)}> {x.name}</button>} </span>)}</td>
                                 <td className="date">{toJSONLocal(x.date)}</td>
                                 <td className="amount">{x.amount}</td>
                                 <td className="price">{x.price}</td>
