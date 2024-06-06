@@ -7,6 +7,7 @@ import * as api from '../../Services/apiService'
 import TagsSummary from '../../Objects/TagsSummary'
 import Expense from "../../Objects/Expense";
 import Table from "../ExpensesTable/table";
+import Category from "../../Objects/Category";
 
 export function TagExpensesTable() {
 
@@ -17,6 +18,7 @@ export function TagExpensesTable() {
     const [tagsSummary, setTagsSummary] = useState<TagsSummary[]>([]);
     const [tagGroupName, setTagGroupName] = useState<string>();
     const [expenses, setExpenses] = useState<Expense[]>()
+    const [tagCategories, setTagCategories] = useState<Category[]>();
 
     const tagId: number = Number(searchParams.get('tagId'));
 
@@ -38,6 +40,15 @@ export function TagExpensesTable() {
         }
         fetchData();
     }, [tagId])
+
+    useEffect(() => {
+        const fetchData=async ()=>{
+            var r = await api.getCategoriesForTagGroup(tagId);
+            console.log("SetTagGroupName", r)
+            setTagGroupName(r.name);
+        }
+        //fetchData();
+    }, [])
 
 
     const loadExpenses = async (tagId: number) => {

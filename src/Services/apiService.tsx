@@ -211,6 +211,11 @@ async function getTagGroupForCategory(categoryId: number) {
   return response.data
 }
 
+async function getCategoriesForTagGroup(tagGroupId: number) {
+  const response = await axios.post(`${config.pathBase}/Tag/getCategoriesForTagGroup?tagGroupId=${tagGroupId}`)
+  return response.data
+}
+
 
 export {
   echo,
@@ -234,6 +239,7 @@ export {
   getTagGroup,
   saveTags,
   removeTagFromExpense,
-  getTagGroupForCategory
+  getTagGroupForCategory,
+  getCategoriesForTagGroup
 
 };
