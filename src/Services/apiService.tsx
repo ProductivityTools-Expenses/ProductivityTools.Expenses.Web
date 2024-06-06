@@ -212,7 +212,7 @@ async function getTagGroupForCategory(categoryId: number) {
 }
 
 async function getCategoriesForTagGroup(tagGroupId: number) {
-  const response = await axios.post(`${config.pathBase}/Tag/getCategoriesForTagGroup?tagGroupId=${tagGroupId}`)
+  const response = await axios.get(`${config.pathBase}/Tag/getCategoriesForTagGroup?tagGroupId=${tagGroupId}`)
   return response.data
 }
 

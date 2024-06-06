@@ -47,7 +47,7 @@ export function TagExpensesTable() {
             console.log("SetTagGroupName", r)
             setTagGroupName(r.name);
         }
-        //fetchData();
+        fetchData();
     }, [])
 
 
