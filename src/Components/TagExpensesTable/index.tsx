@@ -8,6 +8,7 @@ import TagsSummary from '../../Objects/TagsSummary'
 import Expense from "../../Objects/Expense";
 import Table from "../ExpensesTable/table";
 import Category from "../../Objects/Category";
+import TagGroup from "../../Objects/TagGroup";
 
 export function TagExpensesTable() {
 
@@ -16,7 +17,8 @@ export function TagExpensesTable() {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [tagsSummary, setTagsSummary] = useState<TagsSummary[]>([]);
-    const [tagGroupName, setTagGroupName] = useState<string>();
+    const [tagGroup, setTagGroup] = useState<TagGroup>();
+    //const [tagGroupName, setTagGroupName] = useState<string>();
     const [expenses, setExpenses] = useState<Expense[]>()
     const [tagCategories, setTagCategories] = useState<Category[]>();
 
@@ -35,20 +37,22 @@ export function TagExpensesTable() {
         const fetchData = async () => {
             var r = await api.getTagGroup(tagId);
             console.log("SetTagGroupName", r)
-            setTagGroupName(r.name);
+            setTagGroup(r);
 
         }
         fetchData();
     }, [tagId])
 
     useEffect(() => {
-        const fetchData=async ()=>{
-            var r = await api.getCategoriesForTagGroup(tagId);
-            console.log("SetTagGroupName", r)
-            setTagGroupName(r.name);
+        const fetchData = async () => {
+            if (tagGroup?.tagGroupId) {
+                var r = await api.getCategoriesForTagGroup(tagGroup?.tagGroupId);
+                console.log("SetTagGroupName", r)
+                setTagCategories(r);
+            }
         }
         fetchData();
-    }, [])
+    }, [tagGroup])
 
 
     const loadExpenses = async (tagId: number) => {
@@ -59,7 +63,7 @@ export function TagExpensesTable() {
     return (
         <div>
             <span>Tag Id: {tagId}</span><br />
-            <span>Tag group name : {tagGroupName}</span>
+            <span>Tag group name : {tagGroup?.name}</span>
             <button onClick={() => navigate(-1)}>Back</button>
             <table>
                 <tr>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import * as api from "../../Services/apiService";
 import Category from "../../Objects/Category";
 import { useNavigate, useParams } from "react-router-dom";
+import TagGroup from "../../Objects/TagGroup";
 
 export function CategoryEdit() {
 
@@ -12,6 +13,7 @@ export function CategoryEdit() {
     categoryId: null,
     name: "",
   });
+  const [tagGroup, setTagGroup] = useState<TagGroup[]>();
 
   useEffect(() => {
     const getCategory = async () => {
@@ -24,6 +26,20 @@ export function CategoryEdit() {
       getCategory();
     }
   }, [categoryId])
+
+
+  useEffect(() => {
+    const getTagGroups = async () => {
+      console.log("getTagGroups");
+      if (category.categoryId) {
+        let data = await api.getTagGroupForCategory(category.categoryId);
+        setTagGroup(data);
+        console.log("tagGroups", data);
+      }
+    }
+    getTagGroups();
+  }, [categoryId])
+
 
   const save = async () => {
     var r = await api.saveCategory(category);
@@ -46,6 +62,12 @@ export function CategoryEdit() {
       <a href="\CategoriesTable">Category Table</a>
       <p>
         Value<input name="name" type="text" onChange={updateStringValue} value={category.name || ""}></input>
+      </p>
+      <p>
+        TagGroups:
+        {tagGroup?.map(x => {
+          return <div>{x.name}</div>
+        })}
       </p>
       <button onClick={save}>Save</button>
     </div>

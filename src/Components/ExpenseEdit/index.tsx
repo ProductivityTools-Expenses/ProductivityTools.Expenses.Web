@@ -113,7 +113,9 @@ export function ExpenseEdit() {
         const data = await api.getTagGroupForCategory(expense?.categoryId)
         setTagGroups(data);
         console.log("tagGroup", data);
-        setSelectedTagGroup(data[0].tagGroupId);
+        if (data.length > 0) {
+          setSelectedTagGroup(data[0].tagGroupId);
+        }
       }
     }
     getTagGroup();
