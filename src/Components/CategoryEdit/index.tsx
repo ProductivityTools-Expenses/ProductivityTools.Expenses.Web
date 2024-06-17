@@ -3,6 +3,7 @@ import * as api from "../../Services/apiService";
 import Category from "../../Objects/Category";
 import { useNavigate, useParams } from "react-router-dom";
 import TagGroup from "../../Objects/TagGroup";
+import Tag from "../../Objects/Tag";
 
 export function CategoryEdit() {
 
@@ -14,6 +15,8 @@ export function CategoryEdit() {
     name: "",
   });
   const [tagGroup, setTagGroup] = useState<TagGroup[]>();
+  const [allTags,setAllTags]=useState<Tag[]>();
+  const [selectedTagId,setSelectedTagId]=useState<string>("");
 
   useEffect(() => {
     const getCategory = async () => {
@@ -30,7 +33,7 @@ export function CategoryEdit() {
 
   useEffect(() => {
     const getTagGroups = async () => {
-      console.log("getTagGroups");
+      console.log("getTagGroups, categoryId:",categoryId);
       if (category.categoryId) {
         let data = await api.getTagGroupForCategory(category.categoryId);
         setTagGroup(data);
@@ -38,7 +41,19 @@ export function CategoryEdit() {
       }
     }
     getTagGroups();
-  }, [categoryId])
+  }, [category.categoryId])
+
+  useEffect(() => {
+    const getAllTags = async () => {
+      console.log("getAllTags, categoryId:",categoryId);
+      if (category.categoryId) {
+        let data = await api.getAllTags();
+        setAllTags(data);
+        console.log("tagGroups", data);
+      }
+    }
+    getAllTags();
+  }, [])
 
 
   const save = async () => {
@@ -69,6 +84,20 @@ export function CategoryEdit() {
           return <div>{x.name}</div>
         })}
       </p>
+      <select
+        name="tags"
+        value={selectedTagId}
+        onChange={(e) => {
+          setSelectedTagId(e.target.value);
+          console.log("fdsaf");
+        }}
+      >
+        {allTags?.map((x: Tag) => (
+          <option key={x.tagId} value={x.tagId || -1}>
+            {x.name}
+          </option>
+        ))}
+      </select>
       <button onClick={save}>Save</button>
     </div>
   );
