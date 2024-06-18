@@ -211,6 +211,12 @@ async function removeTagFromExpense(expenseTagId: number) {
   return response.data
 }
 
+async function getAllTagGroups() {
+  const response = await axios.get(`${config.pathBase}/Tag/GetAllTagGroups`)
+  return response.data
+}
+
+
 async function getTagGroupForCategory(categoryId: number) {
   const response = await axios.post(`${config.pathBase}/Tag/getTagGroupForCategory?categoryId=${categoryId}`)
   return response.data
@@ -246,6 +252,7 @@ export {
   saveTags,
   removeTagFromExpense,
   getTagGroupForCategory,
+  getAllTagGroups,
   getCategoriesForTagGroup
 
 };
