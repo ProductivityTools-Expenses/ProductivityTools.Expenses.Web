@@ -15,7 +15,7 @@ export function CategoryEdit() {
     name: "",
   });
   const [tagGroup, setTagGroup] = useState<TagGroup[]>();
-  const [allTags, setAllTags] = useState<Tag[]>();
+  const [allTagGroups, setAllTagGroups] = useState<TagGroup[]>();
   const [selectedTagId, setSelectedTagId] = useState<string>("");
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export function CategoryEdit() {
     const getAllTagGroups = async () => {
       console.log("getAllTagGroups");
       let data = await api.getAllTagGroups();
-      setAllTags(data);
+      setAllTagGroups(data);
       console.log("tagGroups", data);
     }
     getAllTagGroups();
@@ -69,8 +69,8 @@ export function CategoryEdit() {
     setCategory({ ...category, [e.target.name]: e.target.value } as Category);
   };
 
-  const addTag = () => {
-
+  const addTagGroupToCategory = (tagGroupId: number, categoryId: number) => {
+    api.addTagGroupToCategory(tagGroupId, categoryId);
   }
 
   return (
@@ -91,16 +91,16 @@ export function CategoryEdit() {
         value={selectedTagId}
         onChange={(e) => {
           setSelectedTagId(e.target.value);
-          console.log("fdsaf");
+          console.log("setSelectedTagId",e.target.value);
         }}
       >
-        {allTags?.map((x: Tag) => (
-          <option key={x.tagId} value={x.tagId || -1}>
+        {allTagGroups?.map((x: TagGroup) => (
+          <option key={x.tagGroupId} value={x.tagGroupId || -1}>
             {x.name}
           </option>
         ))}
       </select>
-      <button onClick={addTag}>AddTag</button>
+      <button onClick={() => addTagGroupToCategory(Number(selectedTagId), Number(categoryId))}>AddTag</button>
       <hr />
       <button onClick={save}>Save</button>
     </div>

@@ -217,6 +217,11 @@ async function getAllTagGroups() {
 }
 
 
+async function addTagGroupToCategory(tagGroupId:number, categoryId: number) {
+  const response = await axios.post(`${config.pathBase}/Tag/addTagGroupToCategory?tagGroupId=${tagGroupId}&categoryId=${categoryId}`)
+  return response.data
+}
+
 async function getTagGroupForCategory(categoryId: number) {
   const response = await axios.post(`${config.pathBase}/Tag/getTagGroupForCategory?categoryId=${categoryId}`)
   return response.data
@@ -252,6 +257,7 @@ export {
   saveTags,
   removeTagFromExpense,
   getTagGroupForCategory,
+  addTagGroupToCategory,
   getAllTagGroups,
   getCategoriesForTagGroup
 
