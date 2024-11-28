@@ -49,6 +49,9 @@ export function BagEdit() {
     const fetchData = async () => {
       const data = await api.getCategories(null)
       setNotAssignedCategories(data);
+      if (data && data[0]) {
+        setSelectedNewCategoryId(data[0].categoryId)
+      }
 
     }
 
@@ -67,6 +70,7 @@ export function BagEdit() {
   //   };
 
   const addCategoryToBag = async () => {
+    console.log("addCategoryToBag", selectedNewCategoryId)
     let selectedCategory = notAssignedCategories?.find(x => x.categoryId == Number(selectedNewCategoryId));
     if (categories && selectedCategory) {
       setCategories([...categories, { categoryId: selectedCategory.categoryId, name: selectedCategory.name, bagCategoryId: null }])
