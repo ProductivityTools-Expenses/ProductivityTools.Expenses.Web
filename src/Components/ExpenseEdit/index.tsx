@@ -100,9 +100,11 @@ export function ExpenseEdit() {
 
   useEffect(() => {
     const getTags = async () => {
-      const data = await api.getTags([Number(expenseId)])
-      setTags(data);
-      console.log("Tags", data);
+      if (expenseId) {
+        const data = await api.getTags([Number(expenseId)])
+        setTags(data);
+        console.log("Tags", data);
+      }
     }
     getTags();
   }, [])
@@ -215,6 +217,7 @@ export function ExpenseEdit() {
         </select>
       </p>
       <p>
+      <DatePicker />
         Date<input name="date" type="text" value={expense?.date || ""} onChange={updateStringValue}></input> (2024-11-29)
       </p>
       <p>
