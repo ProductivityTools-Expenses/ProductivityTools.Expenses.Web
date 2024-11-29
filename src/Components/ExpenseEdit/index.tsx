@@ -215,7 +215,7 @@ export function ExpenseEdit() {
         </select>
       </p>
       <p>
-        Date<input name="date" type="text" value={expense?.date || ""} onChange={updateStringValue}></input>
+        Date<input name="date" type="text" value={expense?.date || ""} onChange={updateStringValue}></input> (2024-11-29)
       </p>
       <p>
         Amount<input name="amountString" type="text" value={expense?.amount || 0} onChange={updateNumberValue}></input>
