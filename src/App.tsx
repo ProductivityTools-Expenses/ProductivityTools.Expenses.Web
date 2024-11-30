@@ -11,7 +11,7 @@ import { CategoryEdit } from "./Components/CategoryEdit";
 import { CategoriesTable } from "./Components/CategoriesTable";
 import { BagEdit } from "./Components/BagEdit";
 import { BagsTable } from "./Components/BagsTable";
-import {TagExpensesTable} from "./Components/TagExpensesTable"
+import { TagExpensesTable } from "./Components/TagExpensesTable"
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,29 +20,34 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Home" element={<Home />} />
-            <Route path="/Login" element={<Login />} />
-            <Route path="/Expenses" element={<ExpensesTable />} />
-            <Route path="/ExpenseAdd" element={<ExpenseEdit />} />
-            <Route path="/ExpenseEdit/:expenseId" element={<ExpenseEdit />} />
-            <Route path="/BagAdd" element={<BagEdit />} />
-            <Route path="/BagEdit/:bagId" element={<BagEdit />} />
-            <Route path="/BagsTable" element={<BagsTable />} />
-            <Route path="/CategoryEdit/:categoryId?/:backUrl?/:urlParam?" element={<CategoryEdit />} />
-            <Route path="/CategoriesTable" element={<CategoriesTable />} />
-            <Route path="/TagExpensesTable" element={<TagExpensesTable />} />
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en">
+        <BrowserRouter>
+          <AuthProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/Home" element={<Home />} />
+              <Route path="/Login" element={<Login />} />
+              <Route path="/Expenses" element={<ExpensesTable />} />
+              <Route path="/ExpenseAdd" element={<ExpenseEdit />} />
+              <Route path="/ExpenseEdit/:expenseId" element={<ExpenseEdit />} />
+              <Route path="/BagAdd" element={<BagEdit />} />
+              <Route path="/BagEdit/:bagId" element={<BagEdit />} />
+              <Route path="/BagsTable" element={<BagsTable />} />
+              <Route path="/CategoryEdit/:categoryId?/:backUrl?/:urlParam?" element={<CategoryEdit />} />
+              <Route path="/CategoriesTable" element={<CategoriesTable />} />
+              <Route path="/TagExpensesTable" element={<TagExpensesTable />} />
 
-          </Routes>
-        </AuthProvider>
-      </BrowserRouter>
+            </Routes>
+          </AuthProvider>
+        </BrowserRouter>
+      </LocalizationProvider>
       <ToastContainer />
 
     </div>

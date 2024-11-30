@@ -9,6 +9,12 @@ import { debug } from "console";
 import TagGroup from "../../Objects/TagGroup";
 import Tag from "../../Objects/Tag";
 
+import dayjs, { Dayjs } from 'dayjs';
+
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TextField } from "@mui/material";
+
+
 export function ExpenseEdit() {
   let { expenseId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -187,10 +193,12 @@ export function ExpenseEdit() {
         Name:{expense?.name} bagid: {expense?.bagId}, categoryId:{expense?.categoryId}, date:{String(expense?.date)},
         amount: {expense?.amount}, price: {expense?.price}, priceString:{expense?.priceString} deductions:{expense?.deductions}, additions:{" "}
         {expense?.additions}, comment:{expense?.comment}
+
       </p>
       <p>
         Name
-        <input type="text" name="name" value={expense?.name || ""} onChange={updateStringValue}></input>
+        {/* <input type="text" name="name" value={expense?.name || ""} onChange={updateStringValue}></input> */}
+        <TextField name="name" value={expense?.name} onChange={updateStringValue}></TextField>
       </p>
       <p>
         Bag
@@ -217,42 +225,57 @@ export function ExpenseEdit() {
         </select>
       </p>
       <p>
-      <DatePicker />
-        Date<input name="date" type="text" value={expense?.date || ""} onChange={updateStringValue}></input> (2024-11-29)
+        <DatePicker format="YYYY.MM.DD" value={dayjs(expense?.date)} onChange={updateStringValue} />
+        {/* Date<input name="date" type="text" value={expense?.date || ""} onChange={updateStringValue}></input> (2024-11-29) */}
       </p>
       <p>
-        Amount<input name="amountString" type="text" value={expense?.amount || 0} onChange={updateNumberValue}></input>
+
+        {/* Amount<input name="amountString" type="text" value={expense?.amount || 0} onChange={updateNumberValue}></input> */}
+        <TextField label="Amount" name="amountString" value={expense?.amount} onChange={updateNumberValue}></TextField>
+
       </p>
       <p>
-        Price
-        <input name="priceString" type="text" value={expense?.priceString || ""} onChange={updateNumberValue}></input>
+
+        {/* <input name="priceString" type="text" value={expense?.priceString || ""} onChange={updateNumberValue}></input> */}
+        <TextField label="Price" name="priceString" value={expense?.priceString} onChange={updateNumberValue}></TextField>
+
       </p>
       <p>
-        Value<input type="text" disabled={true}></input>
+        <TextField label="Value" value={(expense?.price || 0) * (expense?.amount || 0)}></TextField>
+
+        {/* Value<input type="text" disabled={true}></input> */}
       </p>
       <p>
-        Deductions
+        {/* Deductions
         <input
           name="deductionsString"
           type="text"
           value={expense?.deductionsString || ""}
           onChange={updateNumberValue}
-        ></input>
+        ></input> */}
+        <TextField label="Deductions" name="deductionsString" value={expense?.deductionsString} onChange={updateNumberValue}></TextField>
+
       </p>
       <p>
-        Additions
-        <input
+        {/* Additions */}
+        <TextField label="Additions" name="additionsString" value={expense?.additionsString} onChange={updateNumberValue}></TextField>
+
+        {/* <input
           name="additionsString"
           type="text"
           value={expense?.additionsString || ""}
           onChange={updateNumberValue}
-        ></input>
+        ></input> */}
       </p>
       <p>
-        Cost<input type="text" disabled={true}></input>
+        {/* Cost<input type="text" disabled={true}></input> */}
+        <TextField label="Cost" value={Math.round(100*((expense?.price || 0) * (expense?.amount || 0) + (expense?.additions || 0) - (expense?.deductions || 0)))/100} onChange={updateNumberValue}></TextField>
+
       </p>
       <p>
-        Comment<input name="comment" type="text" value={expense?.comment || ""} onChange={updateStringValue}></input>
+        {/* Comment<input name="comment" type="text" value={expense?.comment || ""} onChange={updateStringValue}></input> */}
+        <TextField label="Comment" name="comment" value={expense?.comment} onChange={updateStringValue}></TextField>
+
       </p>
       <span>Tags: {tags && tags.map(x => {
         return (<span>{x?.tag?.name} <button onClick={() => removeTag(x.expenseTagId)}>Remove</button> |</span>)
