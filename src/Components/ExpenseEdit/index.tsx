@@ -105,6 +105,18 @@ export function ExpenseEdit() {
   }, []);
 
   useEffect(() => {
+    const setDate = () => {
+      if (expense && expense.date == null) {
+        var d = dayjs().format('YYYY-MM-DD')
+        console.log("Date:", d);
+
+        setExpense({ ...expense, date: d })
+      }
+    }
+    setDate()
+  }, [expense, expense?.expenseId])
+
+  useEffect(() => {
     const getTags = async () => {
       if (expenseId) {
         const data = await api.getTags([Number(expenseId)])
@@ -269,7 +281,7 @@ export function ExpenseEdit() {
       </p>
       <p>
         {/* Cost<input type="text" disabled={true}></input> */}
-        <TextField label="Cost" value={Math.round(100*((expense?.price || 0) * (expense?.amount || 0) + (expense?.additions || 0) - (expense?.deductions || 0)))/100} onChange={updateNumberValue}></TextField>
+        <TextField label="Cost" value={Math.round(100 * ((expense?.price || 0) * (expense?.amount || 0) + (expense?.additions || 0) - (expense?.deductions || 0))) / 100} onChange={updateNumberValue}></TextField>
 
       </p>
       <p>
