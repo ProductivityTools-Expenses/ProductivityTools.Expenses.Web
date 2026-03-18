@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "pt-expenses",
+    "site": "pt-expenses1",
     "public": "public",
     "ignore": [
       "firebase.json",
